@@ -1,0 +1,5 @@
+<root>
+    <item name='java.util.Arrays java.util.stream.Stream&lt;T&gt; stream(T[])'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

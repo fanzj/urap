@@ -16,10 +16,10 @@ public class SolutionTest {
         System.out.println("初始化两个解");
         a = new Solution();
         a.setDimension(3);
-        a.setContent(new double[]{3.4, 5.6, 2.1});
+        a.setContent(new int[]{3, 5, 2});
         a.setValue(20.345);
 
-        b = new Solution(new double[]{0.31,1.9,4.7});
+        b = new Solution(new int[]{0,9,7});
         b.setDimension(3);
         b.setValue(17.88);
         System.out.println(a);
@@ -40,8 +40,8 @@ public class SolutionTest {
         System.out.println(a);
         System.out.println("对clone后的结果修改");
         c.setDimension(5);
-        double[] content = c.getContent();
-        content[1] = 1.2345;
+        int[] content = c.getContent();
+        content[1] = 10;
         System.out.println(c);
         System.out.println(a);
     }

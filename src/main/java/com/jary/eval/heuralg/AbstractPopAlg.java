@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
+import com.jary.eval.problem.SIAP;
 
 import java.util.Random;
 
@@ -29,7 +30,11 @@ public abstract class AbstractPopAlg implements IAlg {
 
     protected Solution best;
 
+    protected int dimension;//问题的维度
+
     public Random Rand;//随机数发生器
+
+    protected SIAP problem;
 
     public void setName(String name) {
         this.name = name;

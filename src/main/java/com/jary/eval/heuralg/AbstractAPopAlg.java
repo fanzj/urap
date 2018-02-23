@@ -1,8 +1,13 @@
-package com.jary.eval.entity;
+package com.jary.eval.heuralg;
 
+import com.jary.eval.entity.Solution;
+import com.jary.eval.entity.ThreeTuple;
+import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.exception.AlgException;
 import com.jary.eval.heuralg.AbstractPopAlg;
+import com.jary.eval.problem.SIAP;
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -15,7 +20,16 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
     @Override
     public void SetParameters() {
         this.Rand = new Random();
-        this.size = 10;
+
+        //问题初始化
+        problem = new SIAP();
+        try {
+            if(problem.GenerateProblem(1)){
+                System.out.println("问题生成！准备执行。。。");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -25,6 +39,7 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         if (this.size <= 0)
             throw new AlgException("未设置种群大小");
         pop = new Solution[size];
+        ///这里开始。。。。。初始化种群
         for (int i = 0; i < size; i++) {
             this.Evaluate(pop[i]);
         }
@@ -90,7 +105,7 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         return new TwoTuple<Integer, Integer>(r1,r2);
     }
 
-    public ThreeTuple<Integer,Integer,Integer> RandomSelectThreeIndices(int n,int i){
+    public ThreeTuple<Integer,Integer,Integer> RandomSelectThreeIndices(int n, int i){
         int r1 = Rand.nextInt(n);
         while(r1==i){
             r1 = Rand.nextInt(n);

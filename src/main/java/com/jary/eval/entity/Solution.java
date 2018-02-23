@@ -9,7 +9,7 @@ public class Solution implements Cloneable,Comparable<Solution>{
 
     private int id;//解的唯一标识
 
-    private double[] content;//解的内容
+    public int[] content;//解的内容
 
     private int dimension;//解的维度
 
@@ -21,9 +21,10 @@ public class Solution implements Cloneable,Comparable<Solution>{
 
     public Solution(){}
 
-    public Solution(double[] content){
+    public Solution(int[] content){
         this.content = content;
     }
+
 
     public int getId() {
         return id;
@@ -33,11 +34,11 @@ public class Solution implements Cloneable,Comparable<Solution>{
         this.id = id;
     }
 
-    public double[] getContent() {
+    public int[] getContent() {
         return content;
     }
 
-    public void setContent(double[] content) {
+    public void setContent(int[] content) {
         this.content = content;
     }
 
