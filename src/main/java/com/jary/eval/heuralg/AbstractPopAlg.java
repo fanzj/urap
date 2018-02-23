@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Created by Fantasy on 2018/2/21.
  */
-public abstract class AbstractAlg<S extends Solution> implements IAlg {
+public abstract class AbstractPopAlg implements IAlg {
 
     public static final double epsilon = 0.00000000001;
 
@@ -25,9 +25,9 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
 
     protected int iters;//最大迭代次数
 
-    protected S[] pop;//种群
+    protected Solution[] pop;//种群
 
-    protected S best;
+    protected Solution best;
 
     public Random Rand;//随机数发生器
 
@@ -71,26 +71,22 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
         return iters;
     }
 
-    public S[] getPop() {
+    public Solution[] getPop() {
         return pop;
     }
 
-    public S getBest() {
+    public Solution getBest() {
         return best;
     }
 
-    public void SetParameters(){
-        this.size = 10;
-        this.Rand = new Random();
-        //////
-    }
+    public abstract void SetParameters();
 
     public abstract void Calculate();//更新计算控制参数（可选）
 
-    public abstract double Evaluate(S s);//nfe++
+    public abstract double Evaluate(Solution s);//nfe++
 
     public void EvaluateAll(){
-        for (S s:pop) {
+        for (Solution s:pop) {
             this.Evaluate(s);
         }
     }
@@ -99,10 +95,10 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
      * 更新最优解，通常在Initialize或Evolve中调用
      */
     public void UpdateBest(){
-        TwoTuple<S,Integer> tuple = PickBest();
-        S cBest = tuple.first;
+        TwoTuple<Solution,Integer> tuple = PickBest();
+        Solution cBest = tuple.first;
         if(Double.compare(cBest.getValue(),best.getValue())>0){
-            best = (S) cBest.clone();
+            best = cBest.clone();
         }
     }
 
@@ -110,10 +106,10 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
      * 返回种群中最优解和其索引
      * @return
      */
-    public  TwoTuple<S,Integer> PickBest(){
+    public  TwoTuple<Solution,Integer> PickBest(){
         if(pop==null)
-            return new TwoTuple<S, Integer>(null,-1);
-        S s, cBest = pop[0];
+            return new TwoTuple<Solution, Integer>(null,-1);
+        Solution s, cBest = pop[0];
         int bId = 0,count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -122,13 +118,13 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
                 bId = i;
             }
         }
-        return new TwoTuple<S, Integer>(cBest,bId);
+        return new TwoTuple<Solution, Integer>(cBest,bId);
     }
 
-    public TwoTuple<S,Integer> PickWorst(){
+    public TwoTuple<Solution,Integer> PickWorst(){
         if(pop==null)
-            return new TwoTuple<S, Integer>(null,-1);
-        S s, cWorst = pop[0];
+            return new TwoTuple<Solution, Integer>(null,-1);
+        Solution s, cWorst = pop[0];
         int bId = 0,count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -137,13 +133,13 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
                 bId = i;
             }
         }
-        return new TwoTuple<S, Integer>(cWorst,bId);
+        return new TwoTuple<Solution, Integer>(cWorst,bId);
     }
 
-    public FourTuple<S,Integer,S,Integer> PickBestWorst(){
+    public FourTuple<Solution,Integer,Solution,Integer> PickBestWorst(){
         if(pop==null)
-            return new FourTuple<S, Integer, S, Integer>(null,-1,null,-1);
-        S s, cBest = pop[0], cWorst = pop[0];
+            return new FourTuple<Solution, Integer, Solution, Integer>(null,-1,null,-1);
+        Solution s, cBest = pop[0], cWorst = pop[0];
         int bId = 0, wId = 0, count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -155,19 +151,23 @@ public abstract class AbstractAlg<S extends Solution> implements IAlg {
                 wId = i;
             }
         }
-        return new FourTuple<S, Integer, S, Integer>(cBest,bId,cWorst,wId);
+        return new FourTuple<Solution, Integer, Solution, Integer>(cBest,bId,cWorst,wId);
     }
 
-    public S Solve(int iters) {
+    public Solution Solve(int iters) {
         this.iters = iters;
+        this.SetParameters();
+        this.Initialize();
         while (iter++ < iters){
             this.Evolve();
         }
         return best;
     }
 
-    public S SolveF(int nfes) {
+    public Solution SolveF(int nfes) {
         this.nfes = nfes;
+        this.SetParameters();
+        this.Initialize();
         while(nfe <= nfes){
             iter++;
             this.Evolve();
