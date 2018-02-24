@@ -3,14 +3,18 @@ package com.jary.eval.heuralg;
 import com.google.common.collect.Lists;
 import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.Solution;
+import com.jary.eval.entity.StatisticalResult;
+import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.DateUtils;
 import com.jary.eval.utils.FileUtils;
-import org.joda.time.DateTime;
+import com.jary.eval.utils.excel.Common;
+import com.jary.eval.utils.excel.ExcelUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 /**
  * @author Fantasy
@@ -20,17 +24,17 @@ import java.util.stream.DoubleStream;
 public class UrapSolve {
 
 
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         int instanceNo = 1;
         int runtime = 10;
+        Siap problem = Siap.generateProblem(instanceNo);
         AbstractAPopAlg alg = null;
 
         /************ 运行结果 *****************/
         List<Solution> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
-            alg = new DEAlg(instanceNo); // 一个坑 每次要重新读一遍参数
+            alg = new DEAlg(instanceNo,problem);
             Solution sol = alg.Solve();
             results.add(sol);
         }
@@ -67,6 +71,7 @@ public class UrapSolve {
         }
         std = Math.sqrt(std / (results.size() - 1));
 
+        /************** 结果保存 **************/
         StringBuffer sb = new StringBuffer();
         sb.append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -85,15 +90,11 @@ public class UrapSolve {
         String filename = alg.name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
         FileUtils.writeAsStr(path,filename,sb.toString());
 
-
-
-
-
-
-
-
-
-
+        StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime);
+        List<StatisticalResult> list = Lists.newArrayList();
+        list.add(result);
+        path = URAPConstant.RESULT_PATH  + String.format("%02d\\res\\",1) + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
+        new ExcelUtil().writeExcel(list,path,alg.name);
 
 
     }

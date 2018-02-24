@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import com.jary.eval.entity.StatisticalResult;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -34,7 +35,7 @@ public class ExcelUtil {
 		return Common.EMPTY;
 	}
 	
-	public void writeExcel(List<Fitness> f_aTC_list, String f_str_path,String f_str_sheetName) throws Exception {
+	public void writeExcel(List<StatisticalResult> f_aTC_list, String f_str_path, String f_str_sheetName) throws Exception {
 		if (f_aTC_list == null) {
 			return;
 		} else if (f_str_path == null || Common.EMPTY.equals(f_str_path)) {
@@ -73,7 +74,7 @@ public class ExcelUtil {
 		}
 	}
 	
-	public void writeXls(List<Fitness> f_aTC_list, String f_str_path,String f_str_sheetName) throws Exception {
+	public void writeXls(List<StatisticalResult> f_aTC_list, String f_str_path,String f_str_sheetName) throws Exception {
 		if (f_aTC_list == null) {
 			return;
 		}
@@ -82,22 +83,28 @@ public class ExcelUtil {
 		HSSFSheet t_aTC_sheet = t_aTC_book.createSheet(f_str_sheetName);
 		// option at first row.
 		HSSFRow t_aTC_firstRow = t_aTC_sheet.createRow(0);
-		HSSFCell[] t_aTC_firstCells = new HSSFCell[t_aI4_countColumnNum];
-		String[] t_rstr_options = { "id", "fitness"};
+		HSSFCell[] t_aTC_firstCells = new HSSFCell[t_aI4_countColumnNum];///?
+		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime"};
 		for (int t_aI4_j = 0; t_aI4_j < t_rstr_options.length; t_aI4_j++) {
-			t_aTC_firstCells[t_aI4_j] = t_aTC_firstRow.createCell(t_aI4_j);
-			t_aTC_firstCells[t_aI4_j].setCellValue(new HSSFRichTextString(t_rstr_options[t_aI4_j]));
+			t_aTC_firstCells[0] = t_aTC_firstRow.createCell(t_aI4_j);////????????? t_aTC_firstCells[0]
+			t_aTC_firstCells[0].setCellValue(new HSSFRichTextString(t_rstr_options[t_aI4_j]));
 		}
 		//
 		for (int t_aI4_i = 0; t_aI4_i < t_aI4_countColumnNum; t_aI4_i++) {
 			HSSFRow t_aTC_row = t_aTC_sheet.createRow(t_aI4_i + 1);
-			Fitness t_aTC_f = f_aTC_list.get(t_aI4_i);
+			StatisticalResult t_aTC_f = f_aTC_list.get(t_aI4_i);
 			for (int t_aI4_column = 0; t_aI4_column < t_rstr_options.length; t_aI4_column++) {
-				HSSFCell t_aTC_id = t_aTC_row.createCell(0);
-				HSSFCell t_aTC_fitness = t_aTC_row.createCell(1);
-				
-				t_aTC_id.setCellValue(t_aTC_f.getM_aI4_nfe());
-				t_aTC_fitness.setCellValue(t_aTC_f.getM_aI8_fitness());
+				HSSFCell min = t_aTC_row.createCell(0);
+				HSSFCell max = t_aTC_row.createCell(1);
+				HSSFCell mean = t_aTC_row.createCell(2);
+				HSSFCell std = t_aTC_row.createCell(3);
+				HSSFCell avgtime = t_aTC_row.createCell(4);
+
+				min.setCellValue(t_aTC_f.getMin());
+				max.setCellValue(t_aTC_f.getMax());
+				mean.setCellValue(t_aTC_f.getMean());
+				std.setCellValue(t_aTC_f.getStd());
+				avgtime.setCellValue(t_aTC_f.getAvgtime());
 				
 			}
 		}
@@ -108,7 +115,7 @@ public class ExcelUtil {
 		t_aTC_os.close();
 	}
 	
-	public void writeXlsx(List<Fitness> f_aTC_list, String f_str_path,String f_str_sheetName) throws Exception {
+	public void writeXlsx(List<StatisticalResult> f_aTC_list, String f_str_path,String f_str_sheetName) throws Exception {
 		if (f_aTC_list == null) {
 			return;
 		}
@@ -119,21 +126,28 @@ public class ExcelUtil {
 		// option at first row.
 		XSSFRow t_aTC_firstRow = t_aTC_sheet.createRow(0);
 		XSSFCell[] t_aTC_firstCells = new XSSFCell[t_aI4_countColumnNum];
-		String[] t_rstr_options = { "id","fitness"};
+		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime"};
 		for (int t_aI4_j = 0; t_aI4_j < t_rstr_options.length; t_aI4_j++) {
-			t_aTC_firstCells[t_aI4_j] = t_aTC_firstRow.createCell(t_aI4_j);
-			t_aTC_firstCells[t_aI4_j].setCellValue(new XSSFRichTextString(t_rstr_options[t_aI4_j]));
+			t_aTC_firstCells[0] = t_aTC_firstRow.createCell(t_aI4_j);
+			t_aTC_firstCells[0].setCellValue(new XSSFRichTextString(t_rstr_options[t_aI4_j]));
 		}
 		//
 		for (int t_aI4_i = 0; t_aI4_i < t_aI4_countColumnNum; t_aI4_i++) {
 			XSSFRow t_aTC_row = t_aTC_sheet.createRow(t_aI4_i + 1);
-			Fitness t_aTC_f = f_aTC_list.get(t_aI4_i);
+			StatisticalResult t_aTC_f = f_aTC_list.get(t_aI4_i);
 			for (int t_aI4_column = 0; t_aI4_column < t_rstr_options.length; t_aI4_column++) {
-				XSSFCell t_aTC_id = t_aTC_row.createCell(0);
-				XSSFCell t_aTC_fitness = t_aTC_row.createCell(1);
-				
-				t_aTC_id.setCellValue(t_aTC_f.getM_aI4_nfe());
-				t_aTC_fitness.setCellValue(t_aTC_f.getM_aI8_fitness());
+
+				XSSFCell min = t_aTC_row.createCell(0);
+				XSSFCell max = t_aTC_row.createCell(1);
+				XSSFCell mean = t_aTC_row.createCell(2);
+				XSSFCell std = t_aTC_row.createCell(3);
+				XSSFCell avgtime = t_aTC_row.createCell(4);
+
+				min.setCellValue(t_aTC_f.getMin());
+				max.setCellValue(t_aTC_f.getMax());
+				mean.setCellValue(t_aTC_f.getMean());
+				std.setCellValue(t_aTC_f.getStd());
+				avgtime.setCellValue(t_aTC_f.getAvgtime());
 			}
 		}
 		File t_aTC_file = new File(f_str_path);

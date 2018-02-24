@@ -47,8 +47,9 @@ public abstract class AbstractPopAlg implements IAlg {
         this.SetParameters();
     }
 
-    public AbstractPopAlg(int instanceNo){
+    public AbstractPopAlg(int instanceNo,Siap problem){
         this.instanceNo = instanceNo;
+        this.problem = problem;
         this.SetParameters();
     }
 

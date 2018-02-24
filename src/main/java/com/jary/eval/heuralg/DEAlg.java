@@ -2,6 +2,7 @@ package com.jary.eval.heuralg;
 
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
+import com.jary.eval.problem.Siap;
 
 import java.util.Random;
 
@@ -20,9 +21,11 @@ public class DEAlg extends AbstractAPopAlg{
         super();
     }
 
-    public DEAlg(int instanceNo){
-        super(instanceNo);
+    public DEAlg(int instanceNo, Siap problem){
+        super(instanceNo,problem);
     }
+
+
 
 
 
@@ -87,7 +90,8 @@ public class DEAlg extends AbstractAPopAlg{
 
     public static void main(String[] args){
         System.out.println("差分进化算法测试");
-        DEAlg deAlg = new DEAlg(1);
+        Siap problem = Siap.generateProblem(1);
+        DEAlg deAlg = new DEAlg(1,problem);
         deAlg.Solve();
       /*  System.out.println("最优解：");
         deAlg.print(deAlg.best);*/

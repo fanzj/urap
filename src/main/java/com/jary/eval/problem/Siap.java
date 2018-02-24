@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.Solution;
+import com.jary.eval.exception.AlgException;
 import com.jary.eval.utils.FileUtils;
 
 import java.io.IOException;
@@ -240,6 +241,22 @@ public class Siap {
         sol.setTime(maxt);
         sol.setValue(value);
         return value;
+    }
+
+    public static Siap generateProblem(int instanceNo){
+        //问题初始化
+        if(instanceNo<=0)
+            throw new AlgException("请先设置问题实例规模！");
+
+        Siap problem = new Siap();
+        try {
+            if(problem.GenerateProblem(instanceNo)){
+                System.out.println("问题生成！准备执行。。。");
+            }
+        } catch (IOException e) {
+            throw new AlgException("问题生成失败！");
+        }
+        return problem;
     }
 
     /***************************** 测试 **********************************/

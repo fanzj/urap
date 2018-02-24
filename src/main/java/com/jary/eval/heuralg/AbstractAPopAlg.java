@@ -24,15 +24,17 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
         super();
     }
 
-    public AbstractAPopAlg(int instanceNo){
-        super(instanceNo);
+    public AbstractAPopAlg(int instanceNo,Siap problem){
+        super(instanceNo,problem);
     }
+
+
 
     @Override
     public void SetParameters() {
         this.Rand = new Random();
 
-        //问题初始化
+       /* //问题初始化
         if(instanceNo<=0)
             throw new AlgException("请先设置问题实例规模！");
 
@@ -43,7 +45,7 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
             }
         } catch (IOException e) {
             throw new AlgException("问题生成失败！");
-        }
+        }*/
 
         this.dimension = problem.D;
 
