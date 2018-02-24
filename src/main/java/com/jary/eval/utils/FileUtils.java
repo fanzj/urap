@@ -4,6 +4,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.jary.eval.exception.AlgException;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.stream.Stream;
@@ -68,6 +70,35 @@ public class FileUtils {
     public static String readAsStr(String path) throws IOException {
         URL url = Resources.getResource(path);
         return Resources.toString(url, Charsets.UTF_8);
+    }
+
+    /**
+     * 保存文件
+     * @param path 路径
+     * @param name 文件名
+     * @param content 内容
+     */
+    public static void writeAsStr(String path,String name,String content){
+        File file = null;
+        FileWriter fileWriter = null;
+        try {
+            file = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            fileWriter = new FileWriter(path + "\\" +name,true);
+            fileWriter.write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(fileWriter!=null){
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static void print(double[] x){

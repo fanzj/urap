@@ -17,8 +17,13 @@ public class DEAlg extends AbstractAPopAlg{
     private double crossRate;//交叉概率
 
     public DEAlg(){
-
+        super();
     }
+
+    public DEAlg(int instanceNo){
+        super(instanceNo);
+    }
+
 
 
     @Override
@@ -27,10 +32,8 @@ public class DEAlg extends AbstractAPopAlg{
         this.scalingF = 0.5;
         this.crossRate = 0.9;
 
-        this.size = 10;
         this.name = "DE";
-        this.nfes = 10000;
-        this.iters = 20;
+
     }
 
     @Override
@@ -50,6 +53,7 @@ public class DEAlg extends AbstractAPopAlg{
         }
         this.UpdateBest();
     }
+
 
     public void Calculate() {
 
@@ -83,9 +87,9 @@ public class DEAlg extends AbstractAPopAlg{
 
     public static void main(String[] args){
         System.out.println("差分进化算法测试");
-        DEAlg deAlg = new DEAlg();
-        deAlg.Solve(10);
-        System.out.println("最优解：");
-        deAlg.print(deAlg.best);
+        DEAlg deAlg = new DEAlg(1);
+        deAlg.Solve();
+      /*  System.out.println("最优解：");
+        deAlg.print(deAlg.best);*/
     }
 }

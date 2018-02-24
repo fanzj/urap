@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -53,9 +54,9 @@ public class ExcelUtil {
 	}
 
 	private String getValue(XSSFCell f_aTC_xssfRow) {
-		if (f_aTC_xssfRow.getCellType() == f_aTC_xssfRow.CELL_TYPE_BOOLEAN) {
+		if (f_aTC_xssfRow.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 			return String.valueOf(f_aTC_xssfRow.getBooleanCellValue());
-		} else if (f_aTC_xssfRow.getCellType() == f_aTC_xssfRow.CELL_TYPE_NUMERIC) {
+		} else if (f_aTC_xssfRow.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 			return String.valueOf(f_aTC_xssfRow.getNumericCellValue());
 		} else {
 			return String.valueOf(f_aTC_xssfRow.getStringCellValue());
@@ -63,9 +64,9 @@ public class ExcelUtil {
 	}
 
 	private String getValue(HSSFCell f_aTC_hssfCell) {
-		if (f_aTC_hssfCell.getCellType() == f_aTC_hssfCell.CELL_TYPE_BOOLEAN) {
+		if (f_aTC_hssfCell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 			return String.valueOf(f_aTC_hssfCell.getBooleanCellValue());
-		} else if (f_aTC_hssfCell.getCellType() == f_aTC_hssfCell.CELL_TYPE_NUMERIC) {
+		} else if (f_aTC_hssfCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 			return String.valueOf(f_aTC_hssfCell.getNumericCellValue());
 		} else {
 			return String.valueOf(f_aTC_hssfCell.getStringCellValue());

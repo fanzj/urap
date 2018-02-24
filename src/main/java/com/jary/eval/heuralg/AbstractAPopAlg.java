@@ -20,12 +20,22 @@ import java.util.Random;
  */
 public abstract class AbstractAPopAlg extends AbstractPopAlg {
 
+    public AbstractAPopAlg(){
+        super();
+    }
+
+    public AbstractAPopAlg(int instanceNo){
+        super(instanceNo);
+    }
+
     @Override
     public void SetParameters() {
         this.Rand = new Random();
 
         //问题初始化
-        int instanceNo = 1;
+        if(instanceNo<=0)
+            throw new AlgException("请先设置问题实例规模！");
+
         problem = new Siap();
         try {
             if(problem.GenerateProblem(instanceNo)){
@@ -62,7 +72,6 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
         size = config.get("size");
         nfes = config.get("nfes");
         iters = config.get("iters");
-        runtime = config.get("runtime");
 
     }
 
@@ -93,8 +102,8 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
         if (iters == 0) {
             iters = nfes / size;
         }
-        System.out.println("初始种群");
-        printAll(pop);
+        //System.out.println("初始种群");
+        //printAll(pop);
     }
 
 

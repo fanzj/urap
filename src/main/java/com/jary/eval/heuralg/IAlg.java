@@ -11,7 +11,7 @@ public interface IAlg{
 
     void Evolve();//一次迭代演化
 
-    Solution SolveF(int nfes);//指定最大函数估值次数求解问题
+    Solution SolveF();//指定最大函数估值次数求解问题(配置中读取)
 
-    Solution Solve(int iters);//指定最大迭代次数求解问题
+    Solution Solve();//指定最大迭代次数求解问题(配置中读取)
 }

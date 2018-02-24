@@ -1,10 +1,14 @@
 package com.jary.eval.heuralg;
 
+import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.problem.Siap;
+import com.jary.eval.utils.DateUtils;
+import com.jary.eval.utils.FileUtils;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -36,7 +40,17 @@ public abstract class AbstractPopAlg implements IAlg {
 
     protected Siap problem;
 
-    protected int runtime;//算法运行次数
+
+    protected int instanceNo;//问题实例编号
+
+    public AbstractPopAlg(){
+        this.SetParameters();
+    }
+
+    public AbstractPopAlg(int instanceNo){
+        this.instanceNo = instanceNo;
+        this.SetParameters();
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -161,25 +175,33 @@ public abstract class AbstractPopAlg implements IAlg {
         return new FourTuple<Solution, Integer, Solution, Integer>(cBest,bId,cWorst,wId);
     }
 
-    public Solution Solve(int iters) {
-        this.iters = iters;
-        this.SetParameters();
+    public Solution Solve() {
         this.Initialize();
+        //System.out.format("第%d次迭代的最优解：\n",iter);
+        //System.out.println(best);
         while (iter++ < iters){
             this.Evolve();
-            //System.out.println("第"+iter+"次迭代");
-            //printAll(pop);
+            //System.out.format("第%d次迭代的最优解：\n",iter);
+            //System.out.println(best);
         }
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(best.getValue()).append("\n");//保存每次迭代的最优适应度值
+        String path = URAPConstant.RESULT_PATH + String.format("%02d\\res\\",instanceNo);
+        String filename = name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
+        FileUtils.writeAsStr(path,filename,sb.toString());
         return best;
     }
 
-    public Solution SolveF(int nfes) {
-        this.nfes = nfes;
-        this.SetParameters();
+    public Solution SolveF() {
         this.Initialize();
+        System.out.format("第%d次迭代的最优解：\n",iter);
+        System.out.println(best);
         while(nfe <= nfes){
             iter++;
             this.Evolve();
+            System.out.format("第%d次迭代的最优解：\n",iter);
+            System.out.println(best);
         }
         return best;
     }

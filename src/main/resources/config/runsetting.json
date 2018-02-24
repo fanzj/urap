@@ -3,14 +3,12 @@
     "1": {
       "size": 50,
       "iters": 20,
-      "nfes": 1000,
-      "runtime": 10
+      "nfes": 1000
     },
     "2": {
       "size": 50,
       "iters": 40,
-      "nfes": 10000,
-      "runtime": 10
+      "nfes": 10000
     }
   }
 }
