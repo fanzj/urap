@@ -10,6 +10,8 @@ public class URAPConstant {
     //实验数据的路径前缀
     public static final String PREFIX_PATH = "data/data_";
 
+    public static final String RESULT_PATH = "E:\\Workplace\\Intellij idea\\urap\\src\\main\\resources\\data\\data_";
+
     //时间上限
     public static final String TIME_UPPPER = "time_upper.txt";
 

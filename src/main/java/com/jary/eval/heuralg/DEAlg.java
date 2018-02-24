@@ -36,7 +36,7 @@ public class DEAlg extends AbstractAPopAlg{
     @Override
     public void Initialize() {
         super.Initialize();
-        this.UpdateBest();//更新全局最优best
+        this.best = PickBest().first;
     }
 
     public void Evolve() {
@@ -85,5 +85,7 @@ public class DEAlg extends AbstractAPopAlg{
         System.out.println("差分进化算法测试");
         DEAlg deAlg = new DEAlg();
         deAlg.Solve(10);
+        System.out.println("最优解：");
+        deAlg.print(deAlg.best);
     }
 }

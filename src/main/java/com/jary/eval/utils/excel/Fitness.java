@@ -1,14 +1,14 @@
-package com.fzj.solution;
+package com.jary.eval.utils.excel;
 /** 
  * @author Fan Zhengjie 
- * @date 2017Äê1ÔÂ29ÈÕ ÏÂÎç9:10:47 
+ * @date 2017ï¿½ï¿½1ï¿½ï¿½29ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½9:10:47 
  * @version 1.0 
- * @description ²»Í¬ÆÀ¼Û´ÎÊıµÄÊÊÓ¦¶ÈÖµ£¬ÓÃÓÚ½á¹ûµÄÏÔÊ¾
+ * @description ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Û´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
  */
 public class Fitness {
 	
-	private int m_aI4_nfe;//µÚm_aI4_nfe´ÎÆÀ¼Û
-	private double m_aI8_fitness;//µ±Ç°µÄÊÊÓ¦¶ÈÖµ
+	private int m_aI4_nfe;//ï¿½ï¿½m_aI4_nfeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private double m_aI8_fitness;//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Öµ
 	
 	public Fitness(){}
 	

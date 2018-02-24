@@ -3,7 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
-import com.jary.eval.problem.SIAP;
+import com.jary.eval.problem.Siap;
 
 import java.util.Random;
 
@@ -34,7 +34,7 @@ public abstract class AbstractPopAlg implements IAlg {
 
     public Random Rand;//随机数发生器
 
-    protected SIAP problem;
+    protected Siap problem;
 
     public void setName(String name) {
         this.name = name;
@@ -165,6 +165,8 @@ public abstract class AbstractPopAlg implements IAlg {
         this.Initialize();
         while (iter++ < iters){
             this.Evolve();
+            //System.out.println("第"+iter+"次迭代");
+            //printAll(pop);
         }
         return best;
     }
@@ -178,6 +180,16 @@ public abstract class AbstractPopAlg implements IAlg {
             this.Evolve();
         }
         return best;
+    }
+
+    public void print(Solution sol){
+        System.out.println(sol);
+    }
+
+    public void printAll(Solution[] pop){
+        for(Solution sol : pop){
+            print(sol);
+        }
     }
 
 }

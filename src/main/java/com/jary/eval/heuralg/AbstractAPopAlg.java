@@ -4,8 +4,7 @@ import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
 import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.exception.AlgException;
-import com.jary.eval.heuralg.AbstractPopAlg;
-import com.jary.eval.problem.SIAP;
+import com.jary.eval.problem.Siap;
 
 import java.io.IOException;
 import java.util.Random;
@@ -22,7 +21,7 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         this.Rand = new Random();
 
         //问题初始化
-        problem = new SIAP();
+        problem = new Siap();
         try {
             if(problem.GenerateProblem(1)){
                 System.out.println("问题生成！准备执行。。。");
@@ -30,6 +29,8 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.dimension = problem.D;
     }
 
     /**
@@ -41,19 +42,44 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         pop = new Solution[size];
         ///这里开始。。。。。初始化种群
         for (int i = 0; i < size; i++) {
+            Solution sol = new Solution();
+            int[] content = new int[dimension];
+            for(int d=0;d<dimension;d++){
+                if(d%2==0){//设备
+                    content[d] = Rand.nextInt(problem.K) + 1;
+                }else{
+                    content[d] = Rand.nextInt(problem.Q+1);
+                }
+            }
+            sol.setDimension(dimension);
+            sol.setContent(content);
+            sol.setId(sol.hashCode());
+            pop[i] = sol;
             this.Evaluate(pop[i]);
         }
         if (iters == 0) {
             iters = nfes / size;
         }
+        System.out.println("初始种群");
+        printAll(pop);
     }
 
 
-
+    /**
+     * 适应度值的评价
+     * @param s
+     * @return
+     */
     @Override
     public double Evaluate(Solution s) {
-        return 0;
+        return problem.Evaluate(s);
     }
+
+
+
+
+
+
 
     /********************** 一些工具方法 ***********************/
 
@@ -120,4 +146,5 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         }
         return new ThreeTuple<Integer, Integer, Integer>(r1,r2,r3);
     }
+
 }
