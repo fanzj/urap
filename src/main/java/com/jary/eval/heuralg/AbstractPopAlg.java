@@ -36,6 +36,8 @@ public abstract class AbstractPopAlg implements IAlg {
 
     protected Siap problem;
 
+    protected int runtime;//算法运行次数
+
     public void setName(String name) {
         this.name = name;
     }

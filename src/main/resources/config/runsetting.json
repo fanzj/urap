@@ -1,5 +1,16 @@
 {
-  "size":50,
-  "time":300,
-  "runtime":10
+  "instance": {
+    "1": {
+      "size": 50,
+      "iters": 20,
+      "nfes": 1000,
+      "runtime": 10
+    },
+    "2": {
+      "size": 50,
+      "iters": 40,
+      "nfes": 10000,
+      "runtime": 10
+    }
+  }
 }

@@ -1,7 +1,11 @@
 package com.jary.eval.utils;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.jary.eval.exception.AlgException;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.stream.Stream;
 
 /**
@@ -59,6 +63,11 @@ public class FileUtils {
             }
         }
         return y;
+    }
+
+    public static String readAsStr(String path) throws IOException {
+        URL url = Resources.getResource(path);
+        return Resources.toString(url, Charsets.UTF_8);
     }
 
     public static void print(double[] x){

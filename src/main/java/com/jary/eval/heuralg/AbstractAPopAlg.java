@@ -1,12 +1,16 @@
 package com.jary.eval.heuralg;
 
+import com.alibaba.fastjson.JSON;
+import com.jary.eval.entity.RunConfig;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
 import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.exception.AlgException;
 import com.jary.eval.problem.Siap;
+import com.jary.eval.utils.FileUtils;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -14,23 +18,52 @@ import java.util.Random;
  * @date 2018/2/23 13:34
  * @description
  */
-public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg {
+public abstract class AbstractAPopAlg extends AbstractPopAlg {
 
     @Override
     public void SetParameters() {
         this.Rand = new Random();
 
         //问题初始化
+        int instanceNo = 1;
         problem = new Siap();
         try {
-            if(problem.GenerateProblem(1)){
+            if(problem.GenerateProblem(instanceNo)){
                 System.out.println("问题生成！准备执行。。。");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new AlgException("问题生成失败！");
         }
 
         this.dimension = problem.D;
+
+        //运行参数获取
+        try {
+            getRunConfig(instanceNo);
+        } catch (IOException e) {
+            throw new AlgException("运行参数获取失败！");
+        }
+    }
+
+    /**
+     * 根据实例编号获取具体配置信息
+     * @param instanceNo
+     * @throws IOException
+     */
+    private void getRunConfig(int instanceNo) throws IOException {
+        String runsettingStr = FileUtils.readAsStr("config/runsetting.json");
+        //System.out.println(runsettingStr);
+        RunConfig runConfig = JSON.parseObject(runsettingStr,RunConfig.class);
+        Map<Integer, String> instance = runConfig.getInstance();
+        //System.out.println(instance);
+        String content = instance.get(instanceNo);
+        //System.out.println(content);
+        Map<String, Integer> config = JSON.parseObject(content,Map.class);
+        size = config.get("size");
+        nfes = config.get("nfes");
+        iters = config.get("iters");
+        runtime = config.get("runtime");
+
     }
 
     /**
