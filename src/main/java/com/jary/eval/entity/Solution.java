@@ -7,17 +7,17 @@ import java.util.Arrays;
  */
 public class Solution implements Cloneable,Comparable<Solution>{
 
-    private int id;//解的唯一标识
+    protected int id;//解的唯一标识
 
     public int[] content;//解的内容
 
-    private int dimension;//解的维度
+    protected int dimension;//解的维度
 
-    private double value;//解的适应度值
+    protected double value;//解的适应度值
 
-    private int stages;//解的演化次数
+    protected int stages;//解的演化次数
 
-    private double time;//耗时
+    protected double time;//耗时
 
     public Solution(){}
 
