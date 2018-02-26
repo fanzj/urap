@@ -188,7 +188,7 @@ public abstract class AbstractPopAlg implements IAlg {
 
         StringBuffer sb = new StringBuffer();
         sb.append(best.getValue()).append(",");//保存每次迭代的最优适应度值
-        String path = URAPConstant.RESULT_PATH + String.format("%02d\\res\\",instanceNo);
+        String path = URAPConstant.RESULT_PATH + String.format("%02d",instanceNo) + problem.res_subpath;
         String filename = name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
         FileUtils.writeAsStr(path,filename,sb.toString());
         return best;

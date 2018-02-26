@@ -12,6 +12,12 @@ public class URAPConstant {
 
     public static final String RESULT_PATH = "E:\\Workplace\\Intellij idea\\urap\\src\\main\\resources\\data\\data_";
 
+    //SIAP问题实验结果路径
+    public static final String SIAP_PATH = "\\res\\siap\\";
+
+    //MSIAP问题实验结果路径
+    public static final String MSIAP_PATH = "\\res\\msiap";
+
     //时间上限
     public static final String TIME_UPPPER = "time_upper.txt";
 

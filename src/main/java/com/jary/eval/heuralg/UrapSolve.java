@@ -86,14 +86,14 @@ public class UrapSolve {
         sb.append("最差解：").append("\n");
         sb.append(worst).append("\n");
         System.out.println(sb.toString());
-        String path = URAPConstant.RESULT_PATH + String.format("%02d\\res\\",instanceNo);
+        String path = URAPConstant.RESULT_PATH + String.format("%02d",instanceNo) + problem.res_subpath;
         String filename = alg.name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
         FileUtils.writeAsStr(path,filename,sb.toString());
 
         StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime);
         List<StatisticalResult> list = Lists.newArrayList();
         list.add(result);
-        path = URAPConstant.RESULT_PATH  + String.format("%02d\\res\\",1) + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
+        path = URAPConstant.RESULT_PATH  + String.format("%02d",1) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
         new ExcelUtil().writeExcel(list,path,alg.name);
 
 

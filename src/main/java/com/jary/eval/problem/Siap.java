@@ -23,6 +23,7 @@ public class Siap {
 
     public static final double landa = 5.0;//安检员检测能力系数
     public static final double C = 100.0;//罚函数系数
+    public String res_subpath = URAPConstant.SIAP_PATH;//结果保存路径
 
     public int N;//行李数
     public int M;//危险品数
