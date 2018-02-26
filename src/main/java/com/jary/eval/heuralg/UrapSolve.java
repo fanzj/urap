@@ -73,7 +73,7 @@ public class UrapSolve {
 
         /************** 结果保存 **************/
         StringBuffer sb = new StringBuffer();
-        sb.append("统计信息：").append("\n");
+        sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
         sb.append("min = ").append(min).append("\n");
         sb.append("max = ").append(max).append("\n");
