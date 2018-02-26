@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * Created by Fantasy on 2018/2/21.
  */
-public abstract class AbstractPopAlg implements IAlg {
+public abstract class AbstractPopAlg<S extends Solution> implements IAlg<S> {
 
     public static final double epsilon = 0.00000000001;
 
@@ -30,9 +30,9 @@ public abstract class AbstractPopAlg implements IAlg {
 
     protected int iters;//最大迭代次数
 
-    protected Solution[] pop;//种群
+    protected S[] pop;//种群
 
-    protected Solution best;
+    protected S best;
 
     protected int dimension;//问题的维度
 
@@ -93,11 +93,11 @@ public abstract class AbstractPopAlg implements IAlg {
         return iters;
     }
 
-    public Solution[] getPop() {
+    public S[] getPop() {
         return pop;
     }
 
-    public Solution getBest() {
+    public S getBest() {
         return best;
     }
 
@@ -105,10 +105,10 @@ public abstract class AbstractPopAlg implements IAlg {
 
     public abstract void Calculate();//更新计算控制参数（可选）
 
-    public abstract double Evaluate(Solution s);//nfe++
+    public abstract double Evaluate(S s);//nfe++
 
     public void EvaluateAll(){
-        for (Solution s:pop) {
+        for (S s:pop) {
             this.Evaluate(s);
         }
     }
@@ -117,10 +117,10 @@ public abstract class AbstractPopAlg implements IAlg {
      * 更新最优解，通常在Initialize或Evolve中调用
      */
     public void UpdateBest(){
-        TwoTuple<Solution,Integer> tuple = PickBest();
-        Solution cBest = tuple.first;
+        TwoTuple<S,Integer> tuple = PickBest();
+        S cBest = tuple.first;
         if(Double.compare(cBest.getValue(),best.getValue())>0){
-            best = cBest.clone();
+            best = (S) cBest.clone();
         }
     }
 
@@ -128,10 +128,10 @@ public abstract class AbstractPopAlg implements IAlg {
      * 返回种群中最优解和其索引
      * @return
      */
-    public  TwoTuple<Solution,Integer> PickBest(){
+    public  TwoTuple<S,Integer> PickBest(){
         if(pop==null)
-            return new TwoTuple<Solution, Integer>(null,-1);
-        Solution s, cBest = pop[0];
+            return new TwoTuple<S, Integer>(null,-1);
+        S s, cBest = pop[0];
         int bId = 0,count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -140,13 +140,13 @@ public abstract class AbstractPopAlg implements IAlg {
                 bId = i;
             }
         }
-        return new TwoTuple<Solution, Integer>(cBest,bId);
+        return new TwoTuple<S, Integer>(cBest,bId);
     }
 
-    public TwoTuple<Solution,Integer> PickWorst(){
+    public TwoTuple<S,Integer> PickWorst(){
         if(pop==null)
-            return new TwoTuple<Solution, Integer>(null,-1);
-        Solution s, cWorst = pop[0];
+            return new TwoTuple<S, Integer>(null,-1);
+        S s, cWorst = pop[0];
         int bId = 0,count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -155,13 +155,13 @@ public abstract class AbstractPopAlg implements IAlg {
                 bId = i;
             }
         }
-        return new TwoTuple<Solution, Integer>(cWorst,bId);
+        return new TwoTuple<S, Integer>(cWorst,bId);
     }
 
-    public FourTuple<Solution,Integer,Solution,Integer> PickBestWorst(){
+    public FourTuple<S,Integer,S,Integer> PickBestWorst(){
         if(pop==null)
-            return new FourTuple<Solution, Integer, Solution, Integer>(null,-1,null,-1);
-        Solution s, cBest = pop[0], cWorst = pop[0];
+            return new FourTuple<S, Integer, S, Integer>(null,-1,null,-1);
+        S s, cBest = pop[0], cWorst = pop[0];
         int bId = 0, wId = 0, count = pop.length;
         for(int i=1;i<count;i++){
             s = pop[i];
@@ -173,10 +173,10 @@ public abstract class AbstractPopAlg implements IAlg {
                 wId = i;
             }
         }
-        return new FourTuple<Solution, Integer, Solution, Integer>(cBest,bId,cWorst,wId);
+        return new FourTuple<S, Integer, S, Integer>(cBest,bId,cWorst,wId);
     }
 
-    public Solution Solve() {
+    public S Solve() {
         this.Initialize();
         //System.out.format("第%d次迭代的最优解：\n",iter);
         //System.out.println(best);
@@ -194,7 +194,7 @@ public abstract class AbstractPopAlg implements IAlg {
         return best;
     }
 
-    public Solution SolveF() {
+    public S SolveF() {
         this.Initialize();
         System.out.format("第%d次迭代的最优解：\n",iter);
         System.out.println(best);
@@ -207,12 +207,12 @@ public abstract class AbstractPopAlg implements IAlg {
         return best;
     }
 
-    public void print(Solution sol){
+    public void print(S sol){
         System.out.println(sol);
     }
 
-    public void printAll(Solution[] pop){
-        for(Solution sol : pop){
+    public void printAll(S[] pop){
+        for(S sol : pop){
             print(sol);
         }
     }

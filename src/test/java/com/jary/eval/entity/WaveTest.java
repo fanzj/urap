@@ -10,8 +10,8 @@ import org.junit.Test;
  */
 public class WaveTest {
 
-    Solution a;
-    Solution b;
+    Wave a;
+    Wave b;
 
     @Before
     public void initSolution(){
@@ -31,13 +31,14 @@ public class WaveTest {
 
     @Test
     public void testClone(){
-        Solution c = a.clone();
+        Wave c = (Wave) a.clone();
         System.out.println(c);
         System.out.println(a);
         System.out.println("对clone后的结果修改");
         c.setDimension(5);
         int[] content = c.getContent();
         content[1] = 10;
+        c.amplitude = 1.2;
         System.out.println(c);
         System.out.println(a);
     }

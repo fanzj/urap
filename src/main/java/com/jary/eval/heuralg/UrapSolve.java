@@ -4,15 +4,12 @@ import com.google.common.collect.Lists;
 import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.StatisticalResult;
-import com.jary.eval.exception.AlgException;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.DateUtils;
 import com.jary.eval.utils.FileUtils;
 import com.jary.eval.utils.excel.Common;
 import com.jary.eval.utils.excel.ExcelUtil;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +21,14 @@ import java.util.List;
 public class UrapSolve {
 
 
+
     public static void main(String[] args) throws Exception {
+        DEAlgSolve();
+
+
+    }
+
+    private static void DEAlgSolve() throws Exception {
         int instanceNo = 1;
         int runtime = 10;
         Siap problem = Siap.generateProblem(instanceNo);
@@ -95,7 +99,5 @@ public class UrapSolve {
         list.add(result);
         path = URAPConstant.RESULT_PATH  + String.format("%02d",1) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
         new ExcelUtil().writeExcel(list,path,alg.name);
-
-
     }
 }

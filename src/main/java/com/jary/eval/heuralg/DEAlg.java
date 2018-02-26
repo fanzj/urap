@@ -2,6 +2,7 @@ package com.jary.eval.heuralg;
 
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
+import com.jary.eval.exception.AlgException;
 import com.jary.eval.problem.Siap;
 
 import java.util.Random;
@@ -11,7 +12,7 @@ import java.util.Random;
  * @date 2018/2/23 14:49
  * @description 差分进化（DE）算法
  */
-public class DEAlg extends AbstractAPopAlg{
+public class DEAlg extends AbstractAPopAlg<Solution>{
 
     private double scalingF;//变异概率
 
@@ -32,16 +33,37 @@ public class DEAlg extends AbstractAPopAlg{
     @Override
     public void SetParameters() {
         super.SetParameters();
+        this.name = "DE";
         this.scalingF = 0.5;
         this.crossRate = 0.9;
-
-        this.name = "DE";
-
     }
 
     @Override
     public void Initialize() {
-        super.Initialize();
+        if (this.size <= 0)
+            throw new AlgException("未设置种群大小");
+        pop = new Solution[size];
+        ///这里开始。。。。。初始化种群
+        for (int i = 0; i < size; i++) {
+            Solution sol = new Solution();
+            int[] content = new int[dimension];
+            for(int d=0;d<dimension;d++){
+                if(d%2==0){//设备
+                    content[d] = Rand.nextInt(problem.K) + 1;
+                }else{
+                    content[d] = Rand.nextInt(problem.Q+1);
+                }
+            }
+            sol.setDimension(dimension);
+            sol.setContent(content);
+            sol.setId(i);
+            pop[i] = sol;
+            this.Evaluate(pop[i]);
+        }
+        if (iters == 0) {
+            iters = nfes / size;
+        }
+
         this.best = PickBest().first;
     }
 

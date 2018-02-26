@@ -18,7 +18,7 @@ import java.util.Random;
  * @date 2018/2/23 13:34
  * @description
  */
-public abstract class AbstractAPopAlg extends AbstractPopAlg {
+public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg<S> {
 
     public AbstractAPopAlg(){
         super();
@@ -77,16 +77,16 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
 
     }
 
-    /**
+   /* *//**
      * 种群初始化
-     */
+     *//*
     public void Initialize() {
         if (this.size <= 0)
             throw new AlgException("未设置种群大小");
-        pop = new Solution[size];
+        pop = new S[size];
         ///这里开始。。。。。初始化种群
         for (int i = 0; i < size; i++) {
-            Solution sol = new Solution();
+            S sol = new Solution();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
                 if(d%2==0){//设备
@@ -106,7 +106,7 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
         }
         //System.out.println("初始种群");
         //printAll(pop);
-    }
+    }*/
 
 
     /**
@@ -115,8 +115,11 @@ public abstract class AbstractAPopAlg extends AbstractPopAlg {
      * @return
      */
     @Override
-    public double Evaluate(Solution s) {
-        return problem.Evaluate(s);
+    public double Evaluate(S s) {
+        TwoTuple<Double, Double> evaRes = problem.Evaluate(s.getContent());
+        s.setValue(evaRes.first);
+        s.setTime(evaRes.second);
+        return evaRes.first;
     }
 
 

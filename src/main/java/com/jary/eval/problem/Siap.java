@@ -4,7 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.jary.eval.constant.URAPConstant;
-import com.jary.eval.entity.Solution;
+import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.exception.AlgException;
 import com.jary.eval.utils.FileUtils;
 
@@ -220,10 +220,9 @@ public class Siap {
      * 对外暴露的适应度评估函数
      *
      * @param content
-     * @return
+     * @return (适应度，计算时间)
      */
-    public double Evaluate(Solution sol) {
-        int[] content = sol.getContent();
+    public TwoTuple<Double, Double> Evaluate(int[] content) {
         double maxt = calT2(content);
         double value = 0.0;
         for (int i = 0; i < M; i++) {
@@ -239,9 +238,7 @@ public class Siap {
         }
         value -= C * px;
 
-        sol.setTime(maxt);
-        sol.setValue(value);
-        return value;
+        return new TwoTuple<>(value,maxt);//返回适应度值和计算时间
     }
 
     public static Siap generateProblem(int instanceNo){
