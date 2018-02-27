@@ -93,17 +93,7 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
             if(Double.compare(Rand.nextDouble(),crossRate)<0 || j==d){
                 double x = pop[r1].content[d] + scalingF * (pop[r2].content[d] - pop[r3].content[d]);
                 u.content[d] = (int) Math.round(x);
-                if(d%2==0){//设备
-                    if(u.content[d] < problem.lower1 || u.content[d] > problem.upper1){
-                        x = problem.lower1 + Rand.nextDouble()*(problem.upper1 - problem.lower1);
-                        u.content[d] = (int) Math.round(x);
-                    }
-                }else{//安检员
-                    if(u.content[d] < problem.lower2 || u.content[d] > problem.upper2){
-                        x = problem.lower1 + Rand.nextDouble()*(problem.upper1 - problem.lower1);
-                        u.content[d] = (int) Math.round(x);
-                    }
-                }
+                CheckBound(u,d);
             }
         }
         Evaluate(u);
@@ -114,8 +104,9 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
         System.out.println("差分进化算法测试");
         Siap problem = Siap.generateProblem(1);
         DEAlg deAlg = new DEAlg(1,problem);
-        deAlg.Solve();
-      /*  System.out.println("最优解：");
-        deAlg.print(deAlg.best);*/
+        deAlg.SolveF();
+        deAlg.printAll(deAlg.pop);
+        System.out.println("最优解：");
+        deAlg.print(deAlg.best);
     }
 }

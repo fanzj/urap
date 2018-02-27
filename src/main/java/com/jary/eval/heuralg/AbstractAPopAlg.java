@@ -119,7 +119,30 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         TwoTuple<Double, Double> evaRes = problem.Evaluate(s.getContent());
         s.setValue(evaRes.first);
         s.setTime(evaRes.second);
+        this.nfe ++;
         return evaRes.first;
+    }
+
+    /**
+     * 边界检验
+     * @param  s 解
+     * @param d 某一维
+     * @return
+     */
+    public void CheckBound(S s, int d){
+        double x = 0.0;
+        if(d%2==0){//设备
+            if(s.content[d] < problem.lower1 || s.content[d] > problem.upper1){
+                x = problem.lower1 + Rand.nextDouble()*(problem.upper1 - problem.lower1);
+                s.content[d] = (int) Math.round(x);
+            }
+        }else{//安检员
+            if(s.content[d] < problem.lower2 || s.content[d] > problem.upper2){
+                x = problem.lower2 + Rand.nextDouble()*(problem.upper2 - problem.lower2);
+                s.content[d] = (int) Math.round(x);
+            }
+        }
+
     }
 
 
