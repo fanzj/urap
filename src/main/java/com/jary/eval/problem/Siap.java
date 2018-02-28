@@ -44,6 +44,8 @@ public class Siap {
     public int upper1;
     public int lower2;
     public int upper2;
+    public int[] lowers;
+    public int[] uppers;
 
     /******************* 中间变量 *************************/
     public double[][] tjk;//设备检测行李的时间
@@ -105,6 +107,17 @@ public class Siap {
         upper1 = K;
         lower2 = 0;
         upper2 = Q;
+        lowers = new int[D];
+        uppers = new int[D];
+        for(int d=0;d<D;d++){
+            if(d%2==0){
+                lowers[d] = 1;
+                uppers[d] = K;
+            }else{
+                lowers[d] = 0;
+                uppers[d] = Q;
+            }
+        }
 
         //中间变量：检测时间的计算
         calDetectTime();

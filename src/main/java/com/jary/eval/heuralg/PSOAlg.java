@@ -117,6 +117,8 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
         return s;
     }
 
+
+
     /**
      * 通过学习改变粒子速度
      * @param s
