@@ -10,10 +10,10 @@ import com.jary.eval.problem.Siap;
  * @description
  */
 public class DNSPSOAlg extends PSOAlg{
-    private double pr;//控制种群多样性
-    private double pns;//邻域搜索
-    private int MK;//邻域K值
-    private double r1,r2,r3,r4,r5,r6;
+    protected double pr;//控制种群多样性
+    protected double pns;//邻域搜索
+    protected int MK;//邻域K值
+    protected double r1,r2,r3,r4,r5,r6;
 
     public DNSPSOAlg(){
         super();
@@ -51,7 +51,7 @@ public class DNSPSOAlg extends PSOAlg{
      * @param s
      * @param index
      */
-    private void NeighborSearch(Particle s,int index){
+    protected void NeighborSearch(Particle s,int index){
         double r = Rand.nextDouble();
         if (r <= pns)
         {
@@ -277,7 +277,7 @@ public class DNSPSOAlg extends PSOAlg{
     /// <summary>
     /// 生成邻域搜索策略的随机数，每代生成一次
     /// </summary>
-    private void RandomR()
+    protected void RandomR()
     {
         r1 = Rand.nextDouble();
         r2 = Rand.nextDouble();

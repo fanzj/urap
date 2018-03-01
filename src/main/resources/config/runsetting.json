@@ -2,8 +2,8 @@
   "instance": {
     "1": {
       "size": 10,
-      "iters": 20,
-      "nfes": 1000
+      "iters": 200,
+      "nfes": 10000
     },
     "2": {
       "size": 50,
