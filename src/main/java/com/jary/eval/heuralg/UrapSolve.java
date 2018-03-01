@@ -17,9 +17,7 @@ import java.util.List;
  * @date 2018/2/24 18:14
  * @description 问题求解
  */
-public class UrapSolve {
-
-
+public class UrapSolve{
 
     public static void main(String[] args) throws Exception {
         //DEAlgSolve();
@@ -27,7 +25,8 @@ public class UrapSolve {
         //PSOAlgSolve();
         //FADEAlgSolve();
         //DNSPSOAlgSolve();
-        DEDNSPSOAlgSolve();
+        //DEDNSPSOAlgSolve();
+
     }
 
     private static void DEAlgSolve() throws Exception {
