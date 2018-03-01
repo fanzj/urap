@@ -121,6 +121,10 @@ public class DNSPSOAlg extends PSOAlg{
         int[] v = new int[dimension];
         for (int j = 0; j < dimension; j++)
         {
+            if(pop[index].pBest.content==null){
+                System.out.println(pop[index]);
+                System.out.println(index);
+            }
             x[j] = (int) Math.round(r1 * pop[index].content[j] + r2 * pop[index].pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
             v[j] = pop[index].velocity[j];
             if (x[j] < problem.lowers[j])
@@ -187,27 +191,9 @@ public class DNSPSOAlg extends PSOAlg{
         Particle pit2 = pop[index].clone();
         super.Move(pit2,index);
 
+
         //生成tp粒子
-        //Particle tp = getParticleTp(s,pit2);
-        Particle tp = new Particle();
-        int[] tx = new int[dimension];
-        int[] tv = new int[dimension];
-        for (int d = 0; d < dimension; d++)
-        {
-            double r = Rand.nextDouble();
-            if (r < pr)
-            {
-                tx[d] = pit2.content[d];
-            }
-            else
-            {
-                tx[d] = pop[index].content[d];
-            }
-            tv[d] = pit2.velocity[d];
-        }
-        tp.content = tx;
-        tp.velocity = tv;
-        Evaluate(tp);
+        Particle tp = getParticleTp(index,pit2);
 
         //从pit2和tp中选择好的一个
         //s = SelectBetterOne(pit2, tp,s);
@@ -251,8 +237,8 @@ public class DNSPSOAlg extends PSOAlg{
         return s;
     }
 
-    private Particle getParticleTp(Particle s, Particle pit2) {
-        Particle tp = pit2.clone();
+    private Particle getParticleTp(int index, Particle pit2) {
+        Particle tp = new Particle();
         int[] tx = new int[dimension];
         int[] tv = new int[dimension];
         for (int d = 0; d < dimension; d++)
@@ -264,13 +250,17 @@ public class DNSPSOAlg extends PSOAlg{
             }
             else
             {
-                tx[d] = s.content[d];
+                tx[d] = pop[index].content[d];
             }
             tv[d] = pit2.velocity[d];
         }
         tp.content = tx;
         tp.velocity = tv;
         Evaluate(tp);
+        Solution tppbest = new Solution();
+        tppbest.content = tx;
+        tppbest.setValue(tp.getValue());
+        tp.pBest = tppbest;
         return tp;
     }
 

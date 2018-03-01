@@ -37,7 +37,7 @@ public class Particle extends Solution implements Cloneable {
     public String toString() {
         return "Particle{" +
                 //"velocity=" + Arrays.toString(velocity) +
-                //", pBest=" + pBest +
+                ", pBest=" + pBest +
                 super.toString() +
                 "} ";
     }

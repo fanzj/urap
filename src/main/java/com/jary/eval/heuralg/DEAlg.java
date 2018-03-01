@@ -44,7 +44,7 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
             throw new AlgException("未设置种群大小");
         pop = new Solution[size];
         ///这里开始。。。。。初始化种群
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size;) {
             Solution sol = new Solution();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
@@ -59,6 +59,9 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
             sol.setId(i);
             pop[i] = sol;
             this.Evaluate(pop[i]);
+            if(pop[i].getValue()>0){
+                i++;
+            }
         }
         if (iters == 0) {
             iters = nfes / size;

@@ -52,7 +52,7 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
         if (this.size <= 0)
             throw new AlgException("未设置种群大小");
         pop = new Wave[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; ) {
             Wave wave = new Wave();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
@@ -67,6 +67,10 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
             wave.setId(i);
             pop[i] = wave;
             this.Evaluate(pop[i]);
+
+            if(pop[i].getValue()>0){
+                i++;
+            }
         }
         if (iters == 0) {
             iters = nfes / size;

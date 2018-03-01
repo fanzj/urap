@@ -57,6 +57,8 @@ public class SiapSolve implements Runnable {
                 alg = new DNSPSOAlg(instanceNo,problem);
             }else if(algType.getCode() == AlgTypeEnum.DEDNSPSO.getCode()){
                 alg = new DEDNSPSOAlg(instanceNo,problem);
+            }else if(algType.getCode() == AlgTypeEnum.PSO.getCode()){
+                alg = new PSOAlg(instanceNo,problem);
             }
 
             Solution sol = alg.SolveF();
@@ -127,15 +129,11 @@ public class SiapSolve implements Runnable {
 
     @Override
     public void run() {
-        try {
-            Start(instanceNo,runtime,problem,algType);
-        } catch (Exception e) {
-            throw new AlgException("算法运行异常!");
-        }
+        Start(instanceNo,runtime,problem,algType);
     }
 
     public static void main(String[] args){
-        int instanceNo = 2;
+        int instanceNo = 4;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(5);
@@ -145,6 +143,7 @@ public class SiapSolve implements Runnable {
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.FADE));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DNSPSO));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DEDNSPSO));
+            //threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
         }finally {
             threadPool.shutdown();
         }

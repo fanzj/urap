@@ -41,7 +41,7 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
         if (this.size <= 0)
             throw new AlgException("未设置种群大小");
         pop = new Particle[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; ) {
             Particle sol = new Particle();
             int[] content = new int[dimension];
             int[] vs = new int[dimension];
@@ -65,6 +65,10 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
             pbest.content = content.clone();
             pbest.setValue(sol.getValue());
             sol.pBest = pbest;
+
+            if(pop[i].getValue()>0){
+                i++;
+            }
         }
         if (iters == 0) {
             iters = nfes / size;
@@ -111,7 +115,7 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
             pbest.setValue(s.getValue());
             s.pBest = pbest;
             if(s.compareTo(best) > 0){
-                best = s.clone();
+                best = (Particle) s.clone();
             }
         }
         return s;
@@ -137,8 +141,8 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
 
     public static void main(String[] args){
         System.out.println("粒子群优化算法测试");
-        Siap problem = Siap.generateProblem(1);
-        PSOAlg psoAlg = new PSOAlg(1,problem);
+        Siap problem = Siap.generateProblem(3);
+        PSOAlg psoAlg = new PSOAlg(3,problem);
         psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);
         System.out.println("最优解：");

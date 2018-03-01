@@ -65,7 +65,7 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
         if (this.size <= 0)
             throw new AlgException("未设置种群大小");
         pop = new FireSpark[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size;) {
             FireSpark spark = new FireSpark();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
@@ -80,6 +80,9 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
             spark.setId(i);
             pop[i] = spark;
             this.Evaluate(pop[i]);
+            if(pop[i].getValue()>0){
+                i++;
+            }
         }
         if (iters == 0) {
             iters = nfes / size;
@@ -279,10 +282,10 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
 
     public static void main(String[] args){
         System.out.println("FADE算法测试");
-        Siap problem = Siap.generateProblem(1);
-        FADEAlg fadeAlg = new FADEAlg(1,problem);
+        Siap problem = Siap.generateProblem(3);
+        FADEAlg fadeAlg = new FADEAlg(3,problem);
         fadeAlg.SolveF();
-        fadeAlg.printAll(fadeAlg.pop);
+        //fadeAlg.printAll(fadeAlg.pop);
         System.out.println("最优解：");
         fadeAlg.print(fadeAlg.best);
     }

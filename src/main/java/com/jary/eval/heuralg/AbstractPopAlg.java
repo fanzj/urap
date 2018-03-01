@@ -196,7 +196,7 @@ public abstract class AbstractPopAlg<S extends Solution> implements IAlg<S> {
 
     public S SolveF() {
         this.Initialize();
-        /*System.out.format("第%d次迭代的最优解：\n",iter);
+       /* System.out.format("第%d次迭代的最优解：\n",iter);
         System.out.println(best);
         printAll(pop);*/
         while(nfe <= nfes){
