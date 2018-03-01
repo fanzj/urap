@@ -117,7 +117,7 @@ public class SiapSolve implements Runnable {
         StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime);
         List<StatisticalResult> list = Lists.newArrayList();
         list.add(result);
-        path = URAPConstant.RESULT_PATH  + String.format("%02d",1) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
+        path = URAPConstant.RESULT_PATH  + String.format("%02d",instanceNo) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
         try {
             new ExcelUtil().writeExcel(list,path,alg.name);
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 1;
+        int instanceNo = 2;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(5);
