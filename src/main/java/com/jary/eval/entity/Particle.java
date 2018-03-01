@@ -1,7 +1,5 @@
 package com.jary.eval.entity;
 
-import java.util.Arrays;
-
 /**
  * @author Fantasy
  * @date 2018/2/28 13:38
@@ -17,10 +15,12 @@ public class Particle extends Solution implements Cloneable {
 
     public Particle(){
         super();
+        pBest = new Solution();
     }
 
     public Particle(int[] content){
         super(content);
+        pBest = new Solution();
     }
 
     @Override

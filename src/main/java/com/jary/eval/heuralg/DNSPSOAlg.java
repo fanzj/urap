@@ -1,6 +1,7 @@
 package com.jary.eval.heuralg;
 
 import com.jary.eval.entity.Particle;
+import com.jary.eval.entity.Solution;
 import com.jary.eval.problem.Siap;
 
 /**
@@ -37,14 +38,12 @@ public class DNSPSOAlg extends PSOAlg{
     public void Evolve() {
         this.Calculate();
         for(int i=0;i<pop.length;i++){
-            //System.out.println("p1 -> "+pop[i]);
-            pop[i] = this.Move(pop[i],i);
-            //System.out.println("p2 -> "+pop[i]);
+            this.Move(pop[i],i);
         }
-       /* this.RandomR();
+        this.RandomR();
         for(int i=0;i<pop.length;i++){
             this.NeighborSearch(pop[i],i);
-        }*/
+        }
     }
 
     /**
@@ -56,7 +55,7 @@ public class DNSPSOAlg extends PSOAlg{
         double r = Rand.nextDouble();
         if (r <= pns)
         {
-            Particle Pi = s.clone();
+            Particle Pi = pop[index].clone();
             Particle Li = LNS(Pi, index);
             Evaluate(Li);
 
@@ -75,15 +74,18 @@ public class DNSPSOAlg extends PSOAlg{
                     Pi = Gi;
                 }
             }
-            s = Pi;
+            pop[index] = Pi;
         }
 
         //更新pbest和pbest
-        if (s.compareTo(s.pBest) > 0)
+        if (pop[index].compareTo(pop[index].pBest) > 0)
         {
-            s.pBest = s.clone();
-            if (s.compareTo(best) > 0)
-                best = s.clone();
+            Solution pbest = new Solution();
+            pbest.content = pop[index].content;
+            pbest.setValue(pop[index].getValue());
+            pop[index].pBest = pbest;
+            if (pop[index].compareTo(best) > 0)
+                best = pop[index].clone();
         }
     }
 
@@ -114,13 +116,13 @@ public class DNSPSOAlg extends PSOAlg{
             d = Rand.nextInt(k);
         }
 
-        Particle Li = s.clone();
+        Particle Li = pop[index].clone();
         int[] x = new int[dimension];
         int[] v = new int[dimension];
         for (int j = 0; j < dimension; j++)
         {
-            x[j] = (int) Math.round(r1 * s.content[j] + r2 * s.pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
-            v[j] = s.velocity[j];
+            x[j] = (int) Math.round(r1 * pop[index].content[j] + r2 * pop[index].pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
+            v[j] = pop[index].velocity[j];
             if (x[j] < problem.lowers[j])
             {
                 x[j] = problem.lowers[j];
@@ -157,13 +159,13 @@ public class DNSPSOAlg extends PSOAlg{
             f = Rand.nextInt(pop.length);
         }
 
-        Particle Gi = s.clone();
+        Particle Gi = pop[index].clone();
         int[] x = new int[dimension];
         int[] v = new int[dimension];
         for (int j = 0; j < dimension; j++)
         {
-            x[j] = (int) Math.round(r4 * s.content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
-            v[j] = s.velocity[j];
+            x[j] = (int) Math.round(r4 * pop[index].content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
+            v[j] = pop[index].velocity[j];
             if (x[j] < problem.lowers[j])
             {
                 x[j] = problem.lowers[j];
@@ -182,12 +184,12 @@ public class DNSPSOAlg extends PSOAlg{
 
     @Override
     public Particle Move(Particle s, int index) {
-        Particle pit2 = s.clone();
+        Particle pit2 = pop[index].clone();
         super.Move(pit2,index);
 
         //生成tp粒子
         //Particle tp = getParticleTp(s,pit2);
-        Particle tp = pit2.clone();
+        Particle tp = new Particle();
         int[] tx = new int[dimension];
         int[] tv = new int[dimension];
         for (int d = 0; d < dimension; d++)
@@ -199,7 +201,7 @@ public class DNSPSOAlg extends PSOAlg{
             }
             else
             {
-                tx[d] = s.content[d];
+                tx[d] = pop[index].content[d];
             }
             tv[d] = pit2.velocity[d];
         }
@@ -209,26 +211,29 @@ public class DNSPSOAlg extends PSOAlg{
 
         //从pit2和tp中选择好的一个
         //s = SelectBetterOne(pit2, tp,s);
-        if (pit2.compareTo(s)>0 || tp.compareTo(s)>0)
+        if (pit2.compareTo(pop[index])>0 || tp.compareTo(pop[index])>0)
         {
             if (pit2.compareTo(tp) > 0)
             {
-                s = pit2.clone();
+                pop[index] = pit2;
             }
             else
             {
-                s = tp.clone();
+                pop[index] = tp;
             }
         }
 
         //更新pbest和gbest
-        if (s.compareTo(s.pBest) > 0)
+        if (pop[index].compareTo(pop[index].pBest) > 0)
         {
-            s.pBest = s.clone();
-            if (s.compareTo(best) > 0)
-                best = s.clone();
+            Solution pbest = new Solution();
+            pbest.setValue(pop[index].getValue());
+            pbest.content = pop[index].content.clone();
+            pop[index].pBest = pbest;
+            if (pop[index].compareTo(best) > 0)
+                best = pop[index].clone();
         }
-        return s;
+        return pop[index];
     }
 
     private Particle SelectBetterOne(Particle pit2, Particle tp,Particle s) {
@@ -295,7 +300,7 @@ public class DNSPSOAlg extends PSOAlg{
         System.out.println("DNSPSO算法测试");
         Siap problem = Siap.generateProblem(1);
         PSOAlg psoAlg = new DNSPSOAlg(1,problem);
-        psoAlg.Solve();
+        psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);
         System.out.println("最优解：");
         psoAlg.print(psoAlg.best);
