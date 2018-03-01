@@ -196,13 +196,15 @@ public abstract class AbstractPopAlg<S extends Solution> implements IAlg<S> {
 
     public S SolveF() {
         this.Initialize();
-        //System.out.format("第%d次迭代的最优解：\n",iter);
-        //System.out.println(best);
+        System.out.format("第%d次迭代的最优解：\n",iter);
+        System.out.println(best);
+        printAll(pop);
         while(nfe <= nfes){
             iter++;
             this.Evolve();
-            //System.out.format("第%d次迭代的最优解：\n",iter);
-            //System.out.println(best);
+            System.out.format("第%d次迭代的最优解：\n",iter);
+            System.out.println(best);
+            printAll(pop);
         }
         StringBuffer sb = new StringBuffer();
         sb.append(best.getValue()).append(",");//保存每次迭代的最优适应度值

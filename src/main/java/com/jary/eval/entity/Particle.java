@@ -13,7 +13,7 @@ public class Particle extends Solution implements Cloneable {
     public int[] velocity;
 
     //历史最优
-    public Particle pBest;
+    public Solution pBest;
 
     public Particle(){
         super();
@@ -29,6 +29,7 @@ public class Particle extends Solution implements Cloneable {
         particle = (Particle) super.clone();
         particle.content = this.content.clone();
         particle.velocity = this.velocity.clone();
+        particle.pBest = this.pBest.clone();
         return particle;
     }
 

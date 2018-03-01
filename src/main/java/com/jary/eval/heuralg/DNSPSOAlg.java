@@ -37,12 +37,14 @@ public class DNSPSOAlg extends PSOAlg{
     public void Evolve() {
         this.Calculate();
         for(int i=0;i<pop.length;i++){
-            this.Move(pop[i],i);
+            //System.out.println("p1 -> "+pop[i]);
+            pop[i] = this.Move(pop[i],i);
+            //System.out.println("p2 -> "+pop[i]);
         }
-        this.RandomR();
+       /* this.RandomR();
         for(int i=0;i<pop.length;i++){
             this.NeighborSearch(pop[i],i);
-        }
+        }*/
     }
 
     /**
@@ -184,9 +186,41 @@ public class DNSPSOAlg extends PSOAlg{
         super.Move(pit2,index);
 
         //生成tp粒子
-        Particle tp = getParticleTp(s,pit2);
+        //Particle tp = getParticleTp(s,pit2);
+        Particle tp = pit2.clone();
+        int[] tx = new int[dimension];
+        int[] tv = new int[dimension];
+        for (int d = 0; d < dimension; d++)
+        {
+            double r = Rand.nextDouble();
+            if (r < pr)
+            {
+                tx[d] = pit2.content[d];
+            }
+            else
+            {
+                tx[d] = s.content[d];
+            }
+            tv[d] = pit2.velocity[d];
+        }
+        tp.content = tx;
+        tp.velocity = tv;
+        Evaluate(tp);
+
         //从pit2和tp中选择好的一个
-        SelectBetterOne(pit2, tp,s);
+        //s = SelectBetterOne(pit2, tp,s);
+        if (pit2.compareTo(s)>0 || tp.compareTo(s)>0)
+        {
+            if (pit2.compareTo(tp) > 0)
+            {
+                s = pit2.clone();
+            }
+            else
+            {
+                s = tp.clone();
+            }
+        }
+
         //更新pbest和gbest
         if (s.compareTo(s.pBest) > 0)
         {
@@ -202,11 +236,11 @@ public class DNSPSOAlg extends PSOAlg{
         {
             if (pit2.compareTo(tp) > 0)
             {
-                s = pit2.clone();
+                s = pit2;
             }
             else
             {
-                s = tp.clone();
+                s = tp;
             }
         }
         return s;
@@ -260,11 +294,11 @@ public class DNSPSOAlg extends PSOAlg{
     public static void main(String[] args){
         System.out.println("DNSPSO算法测试");
         Siap problem = Siap.generateProblem(1);
-        DNSPSOAlg psoAlg = new DNSPSOAlg(1,problem);
-        psoAlg.SolveF();
-        //psoAlg.printAll(psoAlg.pop);
-        //System.out.println("最优解：");
-        //psoAlg.print(psoAlg.best);
+        PSOAlg psoAlg = new DNSPSOAlg(1,problem);
+        psoAlg.Solve();
+        psoAlg.printAll(psoAlg.pop);
+        System.out.println("最优解：");
+        psoAlg.print(psoAlg.best);
     }
 
 

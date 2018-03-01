@@ -58,10 +58,13 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
             sol.setContent(content);
             sol.setId(i);
             sol.velocity = vs;
-            Particle pbest = sol.clone();
-            sol.pBest = pbest;
             pop[i] = sol;
             this.Evaluate(pop[i]);
+
+            Solution pbest = new Solution();
+            pbest.content = content.clone();
+            pbest.setValue(sol.getValue());
+            sol.pBest = pbest;
         }
         if (iters == 0) {
             iters = nfes / size;
@@ -89,27 +92,24 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
         Learn(s,index);
         for(int d=0;d<dimension;d++){
             s.content[d] += s.velocity[d];
-            if(d%2==0){
-                if(s.content[d] < problem.lower1){
-                    s.content[d] = problem.lower1;
-                    s.velocity[d] = 0;
-                }else if(s.content[d] > problem.upper1){
-                    s.content[d] = problem.upper1;
-                    s.velocity[d] = 0;
-                }
-            }else{
-                if(s.content[d] < problem.lower2){
-                    s.content[d] = problem.lower2;
-                    s.velocity[d] = 0;
-                }else if(s.content[d] > problem.upper2){
-                    s.content[d] = problem.upper2;
-                    s.velocity[d] = 0;
-                }
+            /*if(s.content[d] < problem.lowers[d]){
+                s.content[d] = problem.lowers[d];
+                s.velocity[d] = 0;
+            }else if(s.content[d] > problem.uppers[d]){
+                s.content[d] = problem.uppers[d];
+                s.velocity[d] = 0;
+            }*/
+            if(s.content[d] < problem.lowers[d] || s.content[d] > problem.uppers[d]){
+                s.content[d] = (int) Math.round(problem.lowers[d] + Rand.nextDouble() * (problem.uppers[d] - problem.lowers[d]));
+                s.velocity[d] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[d] - problem.lowers[d]) - s.content[d]));
             }
         }
         Evaluate(s);
         if(s.compareTo(s.pBest)>0){
-            s.pBest = s.clone();
+            Solution pbest = new Solution();
+            pbest.content = s.content.clone();
+            pbest.setValue(s.getValue());
+            s.pBest = pbest;
             if(s.compareTo(best) > 0){
                 best = s.clone();
             }
@@ -140,8 +140,8 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
         Siap problem = Siap.generateProblem(1);
         PSOAlg psoAlg = new PSOAlg(1,problem);
         psoAlg.SolveF();
-        //psoAlg.printAll(psoAlg.pop);
-        //System.out.println("最优解：");
-        //psoAlg.print(psoAlg.best);
+        psoAlg.printAll(psoAlg.pop);
+        System.out.println("最优解：");
+        psoAlg.print(psoAlg.best);
     }
 }

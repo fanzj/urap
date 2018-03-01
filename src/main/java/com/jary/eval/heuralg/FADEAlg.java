@@ -282,7 +282,7 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
         Siap problem = Siap.generateProblem(1);
         FADEAlg fadeAlg = new FADEAlg(1,problem);
         fadeAlg.SolveF();
-        //fadeAlg.printAll(fadeAlg.pop);
+        fadeAlg.printAll(fadeAlg.pop);
         System.out.println("最优解：");
         fadeAlg.print(fadeAlg.best);
     }
