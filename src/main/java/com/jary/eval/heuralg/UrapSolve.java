@@ -29,13 +29,13 @@ public class UrapSolve{
 
     }
 
-    private static void DEAlgSolve() throws Exception {
+    /*private static void DEAlgSolve() throws Exception {
         int instanceNo = 1;
         int runtime = 10;
         Siap problem = Siap.generateProblem(instanceNo);
         AbstractAPopAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<Solution> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -45,7 +45,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -76,7 +76,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -95,10 +95,10 @@ public class UrapSolve{
         String filename = alg.name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
         FileUtils.writeAsStr(path,filename,sb.toString());
 
-        StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime);
+        StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime,alg.size,alg.iters,alg.nfes);
         List<StatisticalResult> list = Lists.newArrayList();
         list.add(result);
-        path = URAPConstant.RESULT_PATH  + String.format("%02d",1) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
+        path = URAPConstant.RESULT_PATH  + String.format("%02d",instanceNo) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
         new ExcelUtil().writeExcel(list,path,alg.name);
     }
 
@@ -108,7 +108,7 @@ public class UrapSolve{
         Siap problem = Siap.generateProblem(instanceNo);
         WWOAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<Wave> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -118,7 +118,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -149,7 +149,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -181,7 +181,7 @@ public class UrapSolve{
         Siap problem = Siap.generateProblem(instanceNo);
         PSOAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<Particle> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -191,7 +191,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -222,7 +222,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -254,7 +254,7 @@ public class UrapSolve{
         Siap problem = Siap.generateProblem(instanceNo);
         FADEAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<FireSpark> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -264,7 +264,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -295,7 +295,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -327,7 +327,7 @@ public class UrapSolve{
         Siap problem = Siap.generateProblem(instanceNo);
         DNSPSOAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<Particle> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -337,7 +337,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -368,7 +368,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -400,7 +400,7 @@ public class UrapSolve{
         Siap problem = Siap.generateProblem(instanceNo);
         DEDNSPSOAlg alg = null;
 
-        /************ 运行结果 *****************/
+        *//************ 运行结果 *****************//*
         List<Particle> results = Lists.newArrayList();
         long start = System.currentTimeMillis();
         for(int i=0;i<runtime;i++){
@@ -410,7 +410,7 @@ public class UrapSolve{
         }
         long end = System.currentTimeMillis();
 
-        /************ 统计结果 *************/
+        *//************ 统计结果 *************//*
         double sum = 0.0;//适应度和
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -441,7 +441,7 @@ public class UrapSolve{
         }
         std = Math.sqrt(std / (results.size() - 1));
 
-        /************** 结果保存 **************/
+        *//************** 结果保存 **************//*
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append("统计信息：").append("\n");
         sb.append("sum = ").append(sum).append("\n");
@@ -465,5 +465,5 @@ public class UrapSolve{
         list.add(result);
         path = URAPConstant.RESULT_PATH  + String.format("%02d",1) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
         new ExcelUtil().writeExcel(list,path,alg.name);
-    }
+    }*/
 }

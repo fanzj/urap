@@ -84,7 +84,7 @@ public class ExcelUtil {
 		// option at first row.
 		HSSFRow t_aTC_firstRow = t_aTC_sheet.createRow(0);
 		HSSFCell[] t_aTC_firstCells = new HSSFCell[t_aI4_countColumnNum];///?
-		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime"};
+		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime","size","iters","nfes"};
 		for (int t_aI4_j = 0; t_aI4_j < t_rstr_options.length; t_aI4_j++) {
 			t_aTC_firstCells[0] = t_aTC_firstRow.createCell(t_aI4_j);////????????? t_aTC_firstCells[0]
 			t_aTC_firstCells[0].setCellValue(new HSSFRichTextString(t_rstr_options[t_aI4_j]));
@@ -99,12 +99,18 @@ public class ExcelUtil {
 				HSSFCell mean = t_aTC_row.createCell(2);
 				HSSFCell std = t_aTC_row.createCell(3);
 				HSSFCell avgtime = t_aTC_row.createCell(4);
+				HSSFCell size = t_aTC_row.createCell(5);
+				HSSFCell iters = t_aTC_row.createCell(6);
+				HSSFCell nfes = t_aTC_row.createCell(7);
 
 				min.setCellValue(t_aTC_f.getMin());
 				max.setCellValue(t_aTC_f.getMax());
 				mean.setCellValue(t_aTC_f.getMean());
 				std.setCellValue(t_aTC_f.getStd());
 				avgtime.setCellValue(t_aTC_f.getAvgtime());
+				size.setCellValue(t_aTC_f.getSize());
+				iters.setCellValue(t_aTC_f.getIters());
+				nfes.setCellValue(t_aTC_f.getNfes());
 				
 			}
 		}
@@ -126,7 +132,7 @@ public class ExcelUtil {
 		// option at first row.
 		XSSFRow t_aTC_firstRow = t_aTC_sheet.createRow(0);
 		XSSFCell[] t_aTC_firstCells = new XSSFCell[t_aI4_countColumnNum];
-		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime"};
+		String[] t_rstr_options = { "min", "max", "mean", "std", "avgtime","size","iters","nfes"};
 		for (int t_aI4_j = 0; t_aI4_j < t_rstr_options.length; t_aI4_j++) {
 			t_aTC_firstCells[0] = t_aTC_firstRow.createCell(t_aI4_j);
 			t_aTC_firstCells[0].setCellValue(new XSSFRichTextString(t_rstr_options[t_aI4_j]));
@@ -142,12 +148,18 @@ public class ExcelUtil {
 				XSSFCell mean = t_aTC_row.createCell(2);
 				XSSFCell std = t_aTC_row.createCell(3);
 				XSSFCell avgtime = t_aTC_row.createCell(4);
+				XSSFCell size = t_aTC_row.createCell(5);
+				XSSFCell iters = t_aTC_row.createCell(6);
+				XSSFCell nfes = t_aTC_row.createCell(7);
 
 				min.setCellValue(t_aTC_f.getMin());
 				max.setCellValue(t_aTC_f.getMax());
 				mean.setCellValue(t_aTC_f.getMean());
 				std.setCellValue(t_aTC_f.getStd());
 				avgtime.setCellValue(t_aTC_f.getAvgtime());
+				size.setCellValue(t_aTC_f.getSize());
+				iters.setCellValue(t_aTC_f.getIters());
+				nfes.setCellValue(t_aTC_f.getNfes());
 			}
 		}
 		File t_aTC_file = new File(f_str_path);

@@ -100,13 +100,16 @@ public class SiapSolve implements Runnable {
         /************** 结果保存 **************/
         StringBuffer sb = new StringBuffer();
         sb.append("\n").append(alg.name).append("统计信息：").append("\n");
+        sb.append("size = ").append(alg.size).append("\n");
+        sb.append("iters = ").append(alg.iters).append("\n");
+        sb.append("nfes = ").append(alg.nfes).append("\n");
         sb.append("sum = ").append(sum).append("\n");
         sb.append("min = ").append(min).append("\n");
         sb.append("max = ").append(max).append("\n");
         sb.append("mean = ").append(mean).append("\n");
         sb.append("std = ").append(std).append("\n");
-        sb.append("totaltime = ").append(totaltime).append("\n");
-        sb.append("avgtime = ").append(avgtime).append("\n");
+        sb.append("totaltime = ").append(totaltime).append("s\n");
+        sb.append("avgtime = ").append(avgtime).append("s\n");
         sb.append("最优解：").append("\n");
         sb.append(best).append("\n");
         sb.append("最差解：").append("\n");
@@ -116,7 +119,7 @@ public class SiapSolve implements Runnable {
         String filename = alg.name+"_"+ DateUtils.formatDate(new Date(), "yyyyMMdd") + ".txt";
         FileUtils.writeAsStr(path,filename,sb.toString());
 
-        StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime);
+        StatisticalResult result = new StatisticalResult(min,max,mean,std,avgtime,alg.size,alg.iters,alg.nfes);
         List<StatisticalResult> list = Lists.newArrayList();
         list.add(result);
         path = URAPConstant.RESULT_PATH  + String.format("%02d",instanceNo) + problem.res_subpath + alg.name + "_" + DateUtils.formatDate(new Date(),"yyyyMMdd") + Common.POINT + Common.OFFICE_EXCEL_2003_POSTFIX;
@@ -133,10 +136,10 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 3;
+        int instanceNo = 1;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
-        ExecutorService threadPool = Executors.newFixedThreadPool(3);
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
         long start = System.currentTimeMillis();
         try{
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DE));
@@ -151,7 +154,7 @@ public class SiapSolve implements Runnable {
             while(true){
                 if(threadPool.isTerminated()){
                     long end = System.currentTimeMillis();
-                    System.out.println("总耗时："+(end - start) / 1000.0+"s");
+                    System.out.println("总耗时："+DateUtils.AsTimeStr(end - start));
                     break;
                 }
             }

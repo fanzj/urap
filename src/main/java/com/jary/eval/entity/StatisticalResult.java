@@ -12,15 +12,21 @@ public class StatisticalResult {
     private double mean;
     private double std;
     private double avgtime;
+    private int size;
+    private int iters;
+    private int nfes;
 
     public StatisticalResult(){}
 
-    public StatisticalResult(double min, double max, double mean, double std, double avgtime){
+    public StatisticalResult(double min, double max, double mean, double std, double avgtime, int size, int iters, int nfes){
         this.min = min;
         this.max = max;
         this.mean = mean;
         this.std = std;
         this.avgtime = avgtime;
+        this.size = size;
+        this.iters = iters;
+        this.nfes = nfes;
     }
 
     public double getMin() {
@@ -61,5 +67,29 @@ public class StatisticalResult {
 
     public void setAvgtime(double avgtime) {
         this.avgtime = avgtime;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getIters() {
+        return iters;
+    }
+
+    public void setIters(int iters) {
+        this.iters = iters;
+    }
+
+    public int getNfes() {
+        return nfes;
+    }
+
+    public void setNfes(int nfes) {
+        this.nfes = nfes;
     }
 }
