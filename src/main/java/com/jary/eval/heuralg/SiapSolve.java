@@ -133,10 +133,11 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 2;
+        int instanceNo = 3;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
-        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+        ExecutorService threadPool = Executors.newFixedThreadPool(3);
+        long start = System.currentTimeMillis();
         try{
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DE));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.WWO));
@@ -146,6 +147,14 @@ public class SiapSolve implements Runnable {
             //threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
         }finally {
             threadPool.shutdown();
+
+            while(true){
+                if(threadPool.isTerminated()){
+                    long end = System.currentTimeMillis();
+                    System.out.println("总耗时："+(end - start) / 1000.0+"s");
+                    break;
+                }
+            }
         }
     }
 }
