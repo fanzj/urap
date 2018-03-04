@@ -30,3 +30,7 @@ asspath
 .idea/*
 \.idea/*
 *.log
+
+*.txt
+*.xls
+*.xlsx
