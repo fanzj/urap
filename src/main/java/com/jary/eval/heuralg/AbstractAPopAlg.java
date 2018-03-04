@@ -32,7 +32,7 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
 
     @Override
     public void SetParameters() {
-        this.Rand = new Random();
+        this.Rand = new Random(System.currentTimeMillis());
 
        /* //问题初始化
         if(instanceNo<=0)
