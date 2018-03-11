@@ -136,7 +136,7 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 1;
+        int instanceNo = 3;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(5);
@@ -147,7 +147,7 @@ public class SiapSolve implements Runnable {
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.FADE));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DNSPSO));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DEDNSPSO));
-            //threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
+            threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
         }finally {
             threadPool.shutdown();
 

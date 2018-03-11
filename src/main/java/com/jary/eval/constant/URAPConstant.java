@@ -10,7 +10,7 @@ public class URAPConstant {
     //实验数据的路径前缀
     public static final String PREFIX_PATH = "data/data_";
 
-    public static final String RESULT_PATH = "E:\\Workplace\\Intellij idea\\urap\\src\\main\\resources\\data\\data_";
+    public static final String RESULT_PATH = "D:\\IdeaProjects\\urap\\src\\main\\resources\\data\\data_";
 
     //SIAP问题实验结果路径
     public static final String SIAP_PATH = "\\res\\siap\\";
