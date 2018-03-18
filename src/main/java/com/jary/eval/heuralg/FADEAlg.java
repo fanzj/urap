@@ -6,6 +6,7 @@ import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.MathUtils;
 
@@ -43,7 +44,7 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
         super();
     }
 
-    public FADEAlg(int intanceNo, Siap problem){
+    public FADEAlg(int intanceNo, MSiap problem){
         super(intanceNo, problem);
     }
 
@@ -69,8 +70,10 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
             FireSpark spark = new FireSpark();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
-                if(d%2==0){//设备
+                if(d%3==0){//设备
                     content[d] = Rand.nextInt(problem.K) + 1;
+                }else if(d%3==1){
+                    content[d] = Rand.nextInt(problem.R+1);
                 }else{
                     content[d] = Rand.nextInt(problem.Q+1);
                 }
@@ -282,8 +285,8 @@ public class FADEAlg extends AbstractAPopAlg<FireSpark>{
 
     public static void main(String[] args){
         System.out.println("FADE算法测试");
-        Siap problem = Siap.generateProblem(3);
-        FADEAlg fadeAlg = new FADEAlg(3,problem);
+        MSiap problem = MSiap.generateProblem(1);
+        FADEAlg fadeAlg = new FADEAlg(1,problem);
         fadeAlg.SolveF();
         //fadeAlg.printAll(fadeAlg.pop);
         System.out.println("最优解：");

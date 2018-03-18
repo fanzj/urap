@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Wave;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.GaussRandom;
 
@@ -31,7 +32,7 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
         this.gRand = new GaussRandom();
     }
 
-    public WWOAlg(int instanceNo, Siap problem){
+    public WWOAlg(int instanceNo, MSiap problem){
         super(instanceNo, problem);
         this.gRand = new GaussRandom();
     }
@@ -56,8 +57,10 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
             Wave wave = new Wave();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
-                if(d%2==0){//设备
+                if(d%3==0){//设备
                     content[d] = Rand.nextInt(problem.K) + 1;
+                }else if(d%3==1){
+                    content[d] = Rand.nextInt(problem.R+1);
                 }else{
                     content[d] = Rand.nextInt(problem.Q+1);
                 }
@@ -81,11 +84,7 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
         range = new int[dimension];
         srange = new int[dimension];
         for(int i=0;i<range.length;i++){
-            if(i%2==0){
-                range[i] = problem.upper1 - problem.lower1;
-            }else{
-                range[i] = problem.upper2 - problem.lower2;
-            }
+            range[i] = problem.uppers[i] - problem.lowers[i];
             srange[i] = (int) Math.round(beta * range[i]);
         }
 
@@ -244,7 +243,7 @@ public class WWOAlg extends AbstractAPopAlg<Wave>{
 
     public static void main(String[] args){
         System.out.println("水波优化算法测试");
-        Siap problem = Siap.generateProblem(1);
+        MSiap problem = MSiap.generateProblem(1);
         WWOAlg wwoAlg = new WWOAlg(1,problem);
         wwoAlg.SolveF();
         wwoAlg.printAll(wwoAlg.pop);

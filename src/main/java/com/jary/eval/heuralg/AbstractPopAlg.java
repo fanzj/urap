@@ -4,6 +4,7 @@ import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.DateUtils;
 import com.jary.eval.utils.FileUtils;
@@ -38,7 +39,7 @@ public abstract class AbstractPopAlg<S extends Solution> implements IAlg<S> {
 
     public Random Rand;//随机数发生器
 
-    protected Siap problem;
+    protected MSiap problem;
 
 
     protected int instanceNo;//问题实例编号
@@ -47,7 +48,7 @@ public abstract class AbstractPopAlg<S extends Solution> implements IAlg<S> {
         this.SetParameters();
     }
 
-    public AbstractPopAlg(int instanceNo,Siap problem){
+    public AbstractPopAlg(int instanceNo,MSiap problem){
         this.instanceNo = instanceNo;
         this.problem = problem;
         this.SetParameters();

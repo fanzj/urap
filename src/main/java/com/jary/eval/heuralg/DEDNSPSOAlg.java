@@ -4,6 +4,7 @@ import com.jary.eval.entity.Particle;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
 import com.jary.eval.entity.TwoTuple;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 
 /**
@@ -28,7 +29,7 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
         super();
     }
 
-    public DEDNSPSOAlg(int instanceNo, Siap problem){
+    public DEDNSPSOAlg(int instanceNo, MSiap problem){
         super(instanceNo, problem);
     }
 
@@ -103,7 +104,7 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
 
     public static void main(String[] args){
         System.out.println("DEDNSPSO算法测试");
-        Siap problem = Siap.generateProblem(1);
+        MSiap problem = MSiap.generateProblem(1);
         DEDNSPSOAlg psoAlg = new DEDNSPSOAlg(1,problem);
         psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);

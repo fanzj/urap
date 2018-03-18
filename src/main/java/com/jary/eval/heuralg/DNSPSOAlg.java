@@ -4,6 +4,7 @@ import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Particle;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.MathUtils;
 
@@ -24,7 +25,7 @@ public class DNSPSOAlg extends PSOAlg{
         super();
     }
 
-    public DNSPSOAlg(int instanceNo, Siap problem){
+    public DNSPSOAlg(int instanceNo, MSiap problem){
         super(instanceNo, problem);
     }
 
@@ -233,7 +234,7 @@ public class DNSPSOAlg extends PSOAlg{
     /// </summary>
     protected void RandomR()
     {
-       /* r1 = Rand.nextDouble();
+        r1 = Rand.nextDouble();
         r2 = Rand.nextDouble();
         while ((r1 + r2) > 1)
         {
@@ -247,9 +248,9 @@ public class DNSPSOAlg extends PSOAlg{
         {
             r5 = Rand.nextDouble();
         }
-        r6 = 1 - r4 - r5;*/
+        r6 = 1 - r4 - r5;
 
-        r1 = Rand.nextDouble();
+      /*  r1 = Rand.nextDouble();
         r2 = 1 - r1;
        // r3 = Rand.nextGaussian();
         r3 = MathUtils.doubleAToB(-2,2);
@@ -257,23 +258,20 @@ public class DNSPSOAlg extends PSOAlg{
         r4 = Rand.nextDouble();
         r5 = 1 - r4;
         //r6 = Rand.nextGaussian();
-        r6 = MathUtils.doubleAToB(-2,2);
+        r6 = MathUtils.doubleAToB(-2,2);*/
 
 
 
     }
 
     public static void main(String[] args){
-       /* System.out.println("DNSPSO算法测试");
-        Siap problem = Siap.generateProblem(1);
+        System.out.println("DNSPSO算法测试");
+        MSiap problem = MSiap.generateProblem(1);
         PSOAlg psoAlg = new DNSPSOAlg(1,problem);
         psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);
         System.out.println("最优解：");
-        psoAlg.print(psoAlg.best);*/
-        Random rand = new Random();
-        System.out.println(rand.nextGaussian());
-        System.out.println(rand.nextDouble());
+        psoAlg.print(psoAlg.best);
     }
 
 

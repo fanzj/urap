@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.Particle;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 
 /**
@@ -22,7 +23,7 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
         super();
     }
 
-    public PSOAlg(int instanceNo, Siap problem){
+    public PSOAlg(int instanceNo, MSiap problem){
         super(instanceNo, problem);
     }
 
@@ -46,13 +47,14 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
             int[] content = new int[dimension];
             int[] vs = new int[dimension];
             for(int d=0;d<dimension;d++){
-                if(d%2==0){//设备
+                if(d%3==0){//设备
                     content[d] = Rand.nextInt(problem.K) + 1;
-                    vs[d] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.upper1 - problem.lower1) - content[d]));
+                }else if(d%3==1){
+                    content[d] = Rand.nextInt(problem.R+1);
                 }else{
                     content[d] = Rand.nextInt(problem.Q+1);
-                    vs[d] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.upper2 - problem.lower2) - content[d]));
                 }
+                vs[d] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[d] - problem.lowers[d]) - content[d]));
             }
             sol.setDimension(dimension);
             sol.setContent(content);
@@ -141,7 +143,7 @@ public class PSOAlg extends AbstractAPopAlg<Particle> {
 
     public static void main(String[] args){
         System.out.println("粒子群优化算法测试");
-        Siap problem = Siap.generateProblem(3);
+        MSiap problem = MSiap.generateProblem(3);
         PSOAlg psoAlg = new PSOAlg(3,problem);
         psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);

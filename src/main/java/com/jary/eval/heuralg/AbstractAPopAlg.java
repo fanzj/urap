@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.alibaba.fastjson.JSON;
 import com.jary.eval.entity.*;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.FileUtils;
 
@@ -21,7 +22,7 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
         super();
     }
 
-    public AbstractAPopAlg(int instanceNo,Siap problem){
+    public AbstractAPopAlg(int instanceNo,MSiap problem){
         super(instanceNo,problem);
     }
 
@@ -127,19 +128,10 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
      * @return
      */
     public void CheckBound(S s, int d){
-        double x = 0.0;
-        if(d%2==0){//设备
-            if(s.content[d] < problem.lower1 || s.content[d] > problem.upper1){
-                x = problem.lower1 + Rand.nextDouble()*(problem.upper1 - problem.lower1);
-                s.content[d] = (int) Math.round(x);
-            }
-        }else{//安检员
-            if(s.content[d] < problem.lower2 || s.content[d] > problem.upper2){
-                x = problem.lower2 + Rand.nextDouble()*(problem.upper2 - problem.lower2);
-                s.content[d] = (int) Math.round(x);
-            }
+        if(s.content[d] < problem.lowers[d] || s.content[d] > problem.uppers[d]){
+            double x = problem.lowers[d] + Rand.nextDouble()*(problem.uppers[d]- problem.lowers[d]);
+            s.content[d] = (int) Math.round(x);
         }
-
     }
 
 

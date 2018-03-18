@@ -6,6 +6,7 @@ import com.jary.eval.entity.AlgTypeEnum;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.StatisticalResult;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.DateUtils;
 import com.jary.eval.utils.FileUtils;
@@ -26,21 +27,21 @@ public class SiapSolve implements Runnable {
 
     private int instanceNo;//问题实例编号
     private int runtime;//运行次数
-    private Siap problem;
+    private MSiap problem;
     private AlgTypeEnum algType;
 
     public SiapSolve(){
 
     }
 
-    public SiapSolve(int instanceNo, int runtime, Siap problem, AlgTypeEnum algType){
+    public SiapSolve(int instanceNo, int runtime, MSiap problem, AlgTypeEnum algType){
         this.instanceNo = instanceNo;
         this.runtime = runtime;
         this.problem = problem;
         this.algType = algType;
     }
 
-    public void Start(int instanceNo, int runtime, Siap problem, AlgTypeEnum algType){
+    public void Start(int instanceNo, int runtime, MSiap problem, AlgTypeEnum algType){
 
         /************ 运行结果 *****************/
         AbstractAPopAlg alg = null;
@@ -136,9 +137,9 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 4;
+        int instanceNo = 2;
         int runtime = 30;
-        Siap problem = Siap.generateProblem(instanceNo);
+        MSiap problem = MSiap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(6);
         long start = System.currentTimeMillis();
         try{

@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.problem.MSiap;
 import com.jary.eval.problem.Siap;
 
 import java.util.Random;
@@ -22,7 +23,7 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
         super();
     }
 
-    public DEAlg(int instanceNo, Siap problem){
+    public DEAlg(int instanceNo, MSiap problem){
         super(instanceNo,problem);
     }
 
@@ -48,9 +49,12 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
             Solution sol = new Solution();
             int[] content = new int[dimension];
             for(int d=0;d<dimension;d++){
-                if(d%2==0){//设备
+                if(d%3==0){//L1设备
                     content[d] = Rand.nextInt(problem.K) + 1;
-                }else{
+                }else if(d%3==1){
+                    content[d] = Rand.nextInt(problem.R+1);
+                }
+                else{
                     content[d] = Rand.nextInt(problem.Q+1);
                 }
             }
@@ -105,7 +109,7 @@ public class DEAlg extends AbstractAPopAlg<Solution>{
 
     public static void main(String[] args){
         System.out.println("差分进化算法测试");
-        Siap problem = Siap.generateProblem(1);
+        MSiap problem = MSiap.generateProblem(1);
         DEAlg deAlg = new DEAlg(1,problem);
         deAlg.SolveF();
         deAlg.printAll(deAlg.pop);

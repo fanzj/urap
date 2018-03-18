@@ -16,7 +16,7 @@ public class URAPConstant {
     public static final String SIAP_PATH = "\\res\\siap\\";
 
     //MSIAP问题实验结果路径
-    public static final String MSIAP_PATH = "\\res\\msiap";
+    public static final String MSIAP_PATH = "\\res\\msiap\\";
 
     //时间上限
     public static final String TIME_UPPPER = "time_upper.txt";
@@ -36,14 +36,23 @@ public class URAPConstant {
     //设备速度
     public static final String skStr = "s_k.txt";
 
+    //2层设备速度
+    public static final String srStr = "s_r.txt";
+
     //行李携带危险品的概率
     public static final String aijStr = "a_ij.txt";
 
     //危险品被设备检测到的概率
     public static final String bik = "b_ik.txt";
 
+    //危险品被2层设备检测到的概率
+    public static final String bir = "b_ir.txt";
+
     //危险品被安检员检测到的概率
     public static final String yiq = "y_iq.txt";
+
+    //计算危险品出现的频率区间
+    public static final String frequency = "frequency.txt";
 
 
 }
