@@ -136,10 +136,10 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 2;
+        int instanceNo = 4;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
-        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+        ExecutorService threadPool = Executors.newFixedThreadPool(6);
         long start = System.currentTimeMillis();
         try{
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DE));
