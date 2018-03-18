@@ -136,7 +136,7 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 3;
+        int instanceNo = 2;
         int runtime = 30;
         Siap problem = Siap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(5);

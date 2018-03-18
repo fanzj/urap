@@ -45,9 +45,9 @@ public class DNSPSOAlg extends PSOAlg{
         for(int i=0;i<pop.length;i++){
             this.Move(pop[i],i);
         }
-        //this.RandomR();
+        this.RandomR();
         for(int i=0;i<pop.length;i++){
-            this.RandomR();
+            //this.RandomR();
             this.NeighborSearch(pop[i],i);
         }
     }
@@ -109,25 +109,17 @@ public class DNSPSOAlg extends PSOAlg{
 
         TwoTuple<Integer,Integer> tuple = RandomSelectTwoIndicies(k);
         int c = tuple.first, d = tuple.second;
-
         Particle Li = s.clone();
-        int[] x = new int[dimension];
-        int[] v = new int[dimension];
-        int pos = Rand.nextInt(dimension);
         for (int j = 0; j < dimension; j++)
         {
-            v[j] = s.velocity[j];
-            //x[j] = (int) Math.round(r1 * s.content[j] + r2 * s.pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
-            x[j] = (int) Math.round((s.content[j] + s.pBest.content[j]) / 2 + Rand.nextGaussian() * (s.pBest.content[j] - s.content[j]) / 2);
+            Li.velocity[j] = s.velocity[j];
+            Li.content[j] = (int) Math.round(r1 * s.content[j] + r2 * s.pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
 
-            if (x[j] < problem.lowers[j] || x[j] > problem.uppers[j]) {
-                x[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
-                v[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
+            if (Li.content[j] < problem.lowers[j] || Li.content[j] > problem.uppers[j]) {
+                Li.content[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                Li.velocity[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
             }
         }
-        Li.content = x;
-        Li.velocity = v;
-
         Evaluate(Li);
         return Li;
 
@@ -143,24 +135,17 @@ public class DNSPSOAlg extends PSOAlg{
     {
         TwoTuple<Integer, Integer> tuple = RandomSelectTwoIndicies(pop.length, index);
         int e = tuple.first, f = tuple.second;
-
         Particle Gi = s.clone();
-        int[] x = new int[dimension];
-        int[] v = new int[dimension];
-        int pos = Rand.nextInt(dimension);
         for (int j = 0; j < dimension; j++)
         {
-            v[j] = s.velocity[j];
-            //x[j] = (int) Math.round(r4 * s.content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
-            x[j] = (int) Math.round((s.content[j] + best.content[j]) / 2 + Rand.nextGaussian() * (best.content[j] - s.content[j]) / 2);
+            Gi.velocity[j] = s.velocity[j];
+            Gi.content[j] = (int) Math.round(r4 * s.content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
 
-            if (x[j] < problem.lowers[j] || x[j] > problem.uppers[j]) {
-                x[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
-                v[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
+            if (Gi.content[j] < problem.lowers[j] || Gi.content[j] > problem.uppers[j]) {
+                Gi.content[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                Gi.velocity[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
             }
         }
-        Gi.content = x;
-        Gi.velocity = v;
         Evaluate(Gi);
         return Gi;
     }

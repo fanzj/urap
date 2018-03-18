@@ -66,6 +66,41 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
         return s;
     }
 
+    @Override
+    protected Particle LNS(Particle s, int index) {
+        Particle Li = s.clone();
+        for (int j = 0; j < dimension; j++)
+        {
+            Li.velocity[j] = s.velocity[j];
+            Li.content[j] = (int) Math.round((s.content[j] + s.pBest.content[j]) / 2 + Rand.nextGaussian() * (s.pBest.content[j] - s.content[j]) / 2);
+
+            if (Li.content[j] < problem.lowers[j] || Li.content[j] > problem.uppers[j]) {
+                Li.content[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                Li.velocity[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
+            }
+        }
+
+        Evaluate(Li);
+        return Li;
+    }
+
+    @Override
+    protected Particle GNS(Particle s, int index) {
+        Particle Gi = s.clone();
+        for (int j = 0; j < dimension; j++)
+        {
+            Gi.velocity[j] = s.velocity[j];
+            Gi.content[j] = (int) Math.round((s.content[j] + best.content[j]) / 2 + Rand.nextGaussian() * (best.content[j] - s.content[j]) / 2);
+
+            if (Gi.content[j] < problem.lowers[j] || Gi.content[j] > problem.uppers[j]) {
+                Gi.content[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                Gi.velocity[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
+            }
+        }
+        Evaluate(Gi);
+        return Gi;
+    }
+
     public static void main(String[] args){
         System.out.println("DEDNSPSO算法测试");
         Siap problem = Siap.generateProblem(1);
