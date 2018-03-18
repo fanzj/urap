@@ -1,10 +1,7 @@
 package com.jary.eval.heuralg;
 
 import com.alibaba.fastjson.JSON;
-import com.jary.eval.entity.RunConfig;
-import com.jary.eval.entity.Solution;
-import com.jary.eval.entity.ThreeTuple;
-import com.jary.eval.entity.TwoTuple;
+import com.jary.eval.entity.*;
 import com.jary.eval.exception.AlgException;
 import com.jary.eval.problem.Siap;
 import com.jary.eval.utils.FileUtils;
@@ -215,6 +212,38 @@ public abstract class AbstractAPopAlg<S extends Solution> extends AbstractPopAlg
             r3 = Rand.nextInt(n);
         }
         return new ThreeTuple<Integer, Integer, Integer>(r1,r2,r3);
+    }
+
+    public FourTuple<Integer, Integer, Integer, Integer> RandomSelectFourIndicies(int n, int i)
+    {
+        int r1 = Rand.nextInt(n);
+        while (r1 == i)
+            r1 = Rand.nextInt(n);
+        int r2 = Rand.nextInt(n);
+        while (r2 == i || r2 == r1)
+            r2 = Rand.nextInt(n);
+        int r3 = Rand.nextInt(n);
+        while (r3 == i || r3 == r1 || r3 == r2)
+            r3 = Rand.nextInt(n);
+        int r4 = Rand.nextInt(n);
+        while (r4 == i || r4 == r1 || r4 == r2 || r4 == r3)
+            r4 = Rand.nextInt(n);
+        return new FourTuple<Integer, Integer, Integer, Integer>(r1, r2, r3, r4);
+    }
+
+    public FourTuple<Integer, Integer, Integer, Integer> RandomSelectFourIndicies(int n) {
+        int r1 = Rand.nextInt(n);
+        int r2 = Rand.nextInt(n);
+        while (r1 == r2) {
+            r2 = Rand.nextInt(n);
+        }
+        int r3 = Rand.nextInt(n);
+        while(r3 == r1 || r3 == r2)
+            r3 = Rand.nextInt(n);
+        int r4 = Rand.nextInt(n);
+        while(r4 == r1 || r4 == r2 || r4 == r3)
+            r4 = Rand.nextInt(n);
+        return new FourTuple<Integer, Integer, Integer, Integer>(r1, r2, r3, r4);
     }
 
 }

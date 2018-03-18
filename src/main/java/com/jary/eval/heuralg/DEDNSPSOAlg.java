@@ -3,6 +3,7 @@ package com.jary.eval.heuralg;
 import com.jary.eval.entity.Particle;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.ThreeTuple;
+import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.problem.Siap;
 
 /**
@@ -43,6 +44,7 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
                 u.content[d] = (int) Math.round(pop[p1].content[d] + scalingF * (pop[p2].content[d] - pop[p3].content[d]));
                 if(u.content[d] < problem.lowers[d] || u.content[d] > problem.uppers[d]){
                     u.content[d] = (int) Math.round(problem.lowers[d] + Rand.nextDouble() * (problem.uppers[d] - problem.lowers[d]));
+                    u.velocity[d] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[d] - problem.lowers[d]) - u.content[d]));
                 }
             }
         }

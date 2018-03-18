@@ -1,9 +1,13 @@
 package com.jary.eval.heuralg;
 
+import com.jary.eval.entity.FourTuple;
 import com.jary.eval.entity.Particle;
 import com.jary.eval.entity.Solution;
 import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.problem.Siap;
+import com.jary.eval.utils.MathUtils;
+
+import java.util.Random;
 
 /**
  * @author Fantasy
@@ -41,7 +45,7 @@ public class DNSPSOAlg extends PSOAlg{
         for(int i=0;i<pop.length;i++){
             this.Move(pop[i],i);
         }
-//        this.RandomR();
+        //this.RandomR();
         for(int i=0;i<pop.length;i++){
             this.RandomR();
             this.NeighborSearch(pop[i],i);
@@ -50,7 +54,7 @@ public class DNSPSOAlg extends PSOAlg{
 
     /**
      * 邻域搜索策略
-     * @param s
+     * @param Pi
      * @param index
      */
     protected void NeighborSearch(Particle Pi,int index){
@@ -109,21 +113,16 @@ public class DNSPSOAlg extends PSOAlg{
         Particle Li = s.clone();
         int[] x = new int[dimension];
         int[] v = new int[dimension];
+        int pos = Rand.nextInt(dimension);
         for (int j = 0; j < dimension; j++)
         {
             v[j] = s.velocity[j];
-            x[j] = (int) Math.round(r1 * s.content[j] + r2 * s.pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
-//            x[j] = (int) Math.round(r1 * s.content[j] + r2 * (s.pBest.content[j] - s.content[j]) + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
-            //x[j] = (int) Math.round(s.content[j] + r1 * (s.pBest.content[j] - pop[kneighbor[c]].content[j]) + r2 * (s.pBest.content[j] - pop[kneighbor[d]].content[j]));
-            //x[j] = (int) Math.round(s.content[j] + r2 * (s.pBest.content[j] - s.content[j]) + r2 * (s.pBest.content[j] - pop[kneighbor[d]].content[j]) );
-            //x[j] = (int) Math.round(Rand.nextDouble() * s.content[j] + Rand.nextDouble() * (s.pBest.content[j]) + Rand.nextDouble() * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]) );
+            //x[j] = (int) Math.round(r1 * s.content[j] + r2 * s.pBest.content[j] + r3 * (pop[kneighbor[c]].content[j] - pop[kneighbor[d]].content[j]));
+            x[j] = (int) Math.round((s.content[j] + s.pBest.content[j]) / 2 + Rand.nextGaussian() * (s.pBest.content[j] - s.content[j]) / 2);
 
-            if (x[j] < problem.lowers[j]) {
-                x[j] = problem.lowers[j];
-                v[j] = 0;
-            } else if (x[j] > problem.uppers[j]) {
-                x[j] = problem.uppers[j];
-                v[j] = 0;
+            if (x[j] < problem.lowers[j] || x[j] > problem.uppers[j]) {
+                x[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                v[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
             }
         }
         Li.content = x;
@@ -148,21 +147,16 @@ public class DNSPSOAlg extends PSOAlg{
         Particle Gi = s.clone();
         int[] x = new int[dimension];
         int[] v = new int[dimension];
+        int pos = Rand.nextInt(dimension);
         for (int j = 0; j < dimension; j++)
         {
             v[j] = s.velocity[j];
-            x[j] = (int) Math.round(r4 * s.content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
-//            x[j] = (int) Math.round(r4 * s.content[j] + r5 * (best.content[j] - s.content[j]) + r6 * (pop[e].content[j] - pop[f].content[j]));
-            //x[j] = (int) Math.round(s.content[j] + r3 * (best.content[j] - pop[e].content[j]) + r4 * (best.content[j] - pop[f].content[j]));
-            //x[j] = (int) Math.round(s.content[j] + r5 * (best.content[j] - s.content[j]) + r5 * (best.content[j] - pop[f].content[j]));
-            //x[j] = (int) Math.round(Rand.nextDouble() * s.content[j] + Rand.nextDouble() * (best.content[j]) + Rand.nextDouble() * (pop[e].content[j] - pop[f].content[j]));
+            //x[j] = (int) Math.round(r4 * s.content[j] + r5 * best.content[j] + r6 * (pop[e].content[j] - pop[f].content[j]));
+            x[j] = (int) Math.round((s.content[j] + best.content[j]) / 2 + Rand.nextGaussian() * (best.content[j] - s.content[j]) / 2);
 
-            if (x[j] < problem.lowers[j]) {
-                x[j] = problem.lowers[j];
-                v[j] = 0;
-            } else if (x[j] > problem.uppers[j]) {
-                x[j] = problem.uppers[j];
-                v[j] = 0;
+            if (x[j] < problem.lowers[j] || x[j] > problem.uppers[j]) {
+                x[j] = (int) Math.round(problem.lowers[j] + Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]));
+                v[j] = (int) Math.round(0.5 * (Rand.nextDouble() * (problem.uppers[j] - problem.lowers[j]) - s.content[j]));
             }
         }
         Gi.content = x;
@@ -254,7 +248,7 @@ public class DNSPSOAlg extends PSOAlg{
     /// </summary>
     protected void RandomR()
     {
-        r1 = Rand.nextDouble();
+       /* r1 = Rand.nextDouble();
         r2 = Rand.nextDouble();
         while ((r1 + r2) > 1)
         {
@@ -268,18 +262,33 @@ public class DNSPSOAlg extends PSOAlg{
         {
             r5 = Rand.nextDouble();
         }
-        r6 = 1 - r4 - r5;
+        r6 = 1 - r4 - r5;*/
+
+        r1 = Rand.nextDouble();
+        r2 = 1 - r1;
+       // r3 = Rand.nextGaussian();
+        r3 = MathUtils.doubleAToB(-2,2);
+
+        r4 = Rand.nextDouble();
+        r5 = 1 - r4;
+        //r6 = Rand.nextGaussian();
+        r6 = MathUtils.doubleAToB(-2,2);
+
+
 
     }
 
     public static void main(String[] args){
-        System.out.println("DNSPSO算法测试");
+       /* System.out.println("DNSPSO算法测试");
         Siap problem = Siap.generateProblem(1);
         PSOAlg psoAlg = new DNSPSOAlg(1,problem);
         psoAlg.SolveF();
         psoAlg.printAll(psoAlg.pop);
         System.out.println("最优解：");
-        psoAlg.print(psoAlg.best);
+        psoAlg.print(psoAlg.best);*/
+        Random rand = new Random();
+        System.out.println(rand.nextGaussian());
+        System.out.println(rand.nextDouble());
     }
 
 
