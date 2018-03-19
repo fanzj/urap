@@ -67,7 +67,7 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
         return s;
     }
 
-    @Override
+   /* @Override
     protected Particle LNS(Particle s, int index) {
         Particle Li = s.clone();
         for (int j = 0; j < dimension; j++)
@@ -83,9 +83,9 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
 
         Evaluate(Li);
         return Li;
-    }
+    }*/
 
-    @Override
+  /*  @Override
     protected Particle GNS(Particle s, int index) {
         Particle Gi = s.clone();
         for (int j = 0; j < dimension; j++)
@@ -100,7 +100,7 @@ public class DEDNSPSOAlg extends DNSPSOAlg {
         }
         Evaluate(Gi);
         return Gi;
-    }
+    }*/
 
     public static void main(String[] args){
         System.out.println("DEDNSPSO算法测试");

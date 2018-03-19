@@ -234,7 +234,7 @@ public class DNSPSOAlg extends PSOAlg{
     /// </summary>
     protected void RandomR()
     {
-        r1 = Rand.nextDouble();
+       /* r1 = Rand.nextDouble();
         r2 = Rand.nextDouble();
         while ((r1 + r2) > 1)
         {
@@ -248,17 +248,17 @@ public class DNSPSOAlg extends PSOAlg{
         {
             r5 = Rand.nextDouble();
         }
-        r6 = 1 - r4 - r5;
+        r6 = 1 - r4 - r5;*/
 
-      /*  r1 = Rand.nextDouble();
+        r1 = Rand.nextDouble();
         r2 = 1 - r1;
-       // r3 = Rand.nextGaussian();
+        r3 = Rand.nextGaussian();
         r3 = MathUtils.doubleAToB(-2,2);
 
         r4 = Rand.nextDouble();
         r5 = 1 - r4;
-        //r6 = Rand.nextGaussian();
-        r6 = MathUtils.doubleAToB(-2,2);*/
+        r6 = Rand.nextGaussian();
+        r6 = MathUtils.doubleAToB(-2,2);
 
 
 

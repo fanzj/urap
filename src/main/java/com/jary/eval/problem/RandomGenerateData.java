@@ -263,8 +263,8 @@ public class RandomGenerateData {
 
 	
 
-	private void genExpData(String path, int problemNo){
-		/*genWi(path);
+	private void genExpData(String path){
+		genWi(path);
 		genLj(path);
 		genVj(path);
 		genSk(path);
@@ -274,17 +274,13 @@ public class RandomGenerateData {
 		genAij(path);
 		genBik(path);
 		genBir(path);
-		genYiq(path);*/
-		try {
-			calInterval(path,problemNo);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		genYiq(path);
 	}
 	
-	public static void main(String[] args) {
-		RandomGenerateData t_aTC_genData = new RandomGenerateData(3,58,4,2,2);
-		t_aTC_genData.genExpData("msiap\\data_02",2);
+	public static void main(String[] args) throws IOException {
+		RandomGenerateData t_aTC_genData = new RandomGenerateData(50	,2018,42,23,17);
+		String path = "msiap\\data_08";
+		//t_aTC_genData.genExpData(path);
+		t_aTC_genData.calInterval(path,8);
 	}
 }
