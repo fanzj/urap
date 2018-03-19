@@ -137,7 +137,7 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 2;
+        int instanceNo = 1;
         int runtime = 30;
         MSiap problem = MSiap.generateProblem(instanceNo);
         ExecutorService threadPool = Executors.newFixedThreadPool(6);
