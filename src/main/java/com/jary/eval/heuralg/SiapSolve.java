@@ -137,10 +137,10 @@ public class SiapSolve implements Runnable {
     }
 
     public static void main(String[] args){
-        int instanceNo = 1;
-        int runtime = 30;
+        int instanceNo = 8;//6
+        int runtime = 3;
         MSiap problem = MSiap.generateProblem(instanceNo);
-        ExecutorService threadPool = Executors.newFixedThreadPool(6);
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
         long start = System.currentTimeMillis();
         try{
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DE));
@@ -148,7 +148,7 @@ public class SiapSolve implements Runnable {
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.FADE));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DNSPSO));
             threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.DEDNSPSO));
-            threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
+            //threadPool.execute(new SiapSolve(instanceNo,runtime,problem,AlgTypeEnum.PSO));
         }finally {
             threadPool.shutdown();
 

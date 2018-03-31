@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.jary.eval.constant.URAPConstant;
 import com.jary.eval.entity.TwoTuple;
 import com.jary.eval.exception.AlgException;
+import com.jary.eval.utils.DateUtils;
 import com.jary.eval.utils.FileUtils;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
@@ -279,7 +281,7 @@ public class MSiap extends Siap {
         MSiap problem = new MSiap();
         try {
             if(problem.GenerateProblem(instanceNo)){
-                System.out.println("问题生成！准备执行。。。");
+                System.out.println("问题生成！准备执行。。。"+"当前时间："+ new Date());
             }
         } catch (IOException e) {
             throw new AlgException("问题生成失败！");
